@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import './i18n';
 
 // Components
@@ -19,6 +20,8 @@ import SurveyPage from './pages/user/SurveyPage';
 import ThankYou from './pages/user/ThankYou';
 
 function App() {
+  const { i18n } = useTranslation();
+  
   useEffect(() => {
     // Initialize theme
     const theme = localStorage.getItem('theme');
@@ -26,6 +29,15 @@ function App() {
       document.documentElement.classList.add('dark');
     }
   }, []);
+  
+  // Handle RTL/LTR direction based on language
+  useEffect(() => {
+    const rtlLanguages = ['ar', 'ku'];
+    const isRTL = rtlLanguages.includes(i18n.language);
+    
+    document.documentElement.dir = isRTL ? 'rtl' : 'ltr';
+    document.documentElement.lang = i18n.language;
+  }, [i18n.language]);
   
   return (
     <>

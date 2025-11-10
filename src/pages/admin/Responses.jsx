@@ -28,10 +28,10 @@ const Responses = () => {
     return <Loading fullScreen text={t('common.loading')} />;
   }
 
-  // Get all unique questions
+  // Get all unique questions (question_text is already raw multilang object from service)
   const allQuestions = responses.length > 0 ? responses[0].answers.map(a => ({
     id: a.question_id,
-    text: getLocalizedText(a.question_text, i18n.language),
+    text: a.question_text, // Keep raw multilang object
     type: a.question_type
   })) : [];
 
@@ -46,15 +46,20 @@ const Responses = () => {
         responses.forEach(response => {
           const answer = response.answers.find(a => a.question_id === question.id);
           if (answer && answer.answer) {
-            const options = answer.answer.split(', ');
-            options.forEach(option => {
-              answerCounts[option] = (answerCounts[option] || 0) + 1;
+            // answer.answer is now an array of multilang objects
+            const options = Array.isArray(answer.answer) ? answer.answer : [answer.answer];
+            options.forEach(optionText => {
+              // Get localized text for the option
+              const localizedOption = getLocalizedText(optionText, i18n.language);
+              if (localizedOption) {
+                answerCounts[localizedOption] = (answerCounts[localizedOption] || 0) + 1;
+              }
             });
           }
         });
         
         stats[question.id] = {
-          question: getLocalizedText(question.text, i18n.language),
+          question: question.text, // Keep raw multilang object
           answers: answerCounts,
           total: responses.length
         };
@@ -65,7 +70,7 @@ const Responses = () => {
           .filter(Boolean);
         
         stats[question.id] = {
-          question: getLocalizedText(question.text, i18n.language),
+          question: question.text, // Keep raw multilang object
           type: 'text',
           answers: textAnswers,
           total: textAnswers.length
@@ -101,18 +106,30 @@ const Responses = () => {
           </div>
           
           <div className="space-y-4">
-            {response.answers.map((answer, idx) => (
-              <div key={idx}>
-                <p className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                  Q{idx + 1}: {getLocalizedText(answer.question_text, i18n.language)}
-                </p>
-                <div className="ml-4 p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
-                  <p className="text-gray-900 dark:text-white">
-                    {answer.answer || <span className="text-gray-400 italic">No answer</span>}
+            {response.answers.map((answer, idx) => {
+              // Format answer display
+              let displayAnswer = answer.answer;
+              if (answer.question_type === 'mcq' && Array.isArray(answer.answer)) {
+                // Convert array of multilang objects to localized comma-separated string
+                displayAnswer = answer.answer
+                  .map(opt => getLocalizedText(opt, i18n.language))
+                  .filter(Boolean)
+                  .join(', ');
+              }
+              
+              return (
+                <div key={idx}>
+                  <p className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                    Q{idx + 1}: {getLocalizedText(answer.question_text, i18n.language)}
                   </p>
+                  <div className="ml-4 p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                    <p className="text-gray-900 dark:text-white">
+                      {displayAnswer || <span className="text-gray-400 italic">No answer</span>}
+                    </p>
+                  </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </Card>
       ))}
@@ -135,7 +152,7 @@ const Responses = () => {
               {allQuestions.map((question) => (
                 <th key={question.id} className="px-4 py-3 text-left text-sm font-semibold text-gray-900 dark:text-white min-w-[250px]">
                   <div className="line-clamp-2">
-                    {question.text}
+                    {getLocalizedText(question.text, i18n.language)}
                   </div>
                 </th>
               ))}
@@ -153,13 +170,25 @@ const Responses = () => {
                 <td className="px-4 py-3 text-sm text-gray-600 dark:text-gray-400 whitespace-nowrap sticky left-12 bg-white dark:bg-gray-800">
                   {format(new Date(response.submitted_at), 'MMM d, yyyy HH:mm')}
                 </td>
-                {response.answers.map((answer) => (
-                  <td key={answer.question_id} className="px-4 py-3 text-sm text-gray-900 dark:text-white min-w-[250px]">
-                    <div className="line-clamp-3">
-                      {answer.answer || <span className="text-gray-400 italic">-</span>}
-                    </div>
-                  </td>
-                ))}
+                {response.answers.map((answer) => {
+                  // Format answer display
+                  let displayAnswer = answer.answer;
+                  if (answer.question_type === 'mcq' && Array.isArray(answer.answer)) {
+                    // Convert array of multilang objects to localized comma-separated string
+                    displayAnswer = answer.answer
+                      .map(opt => getLocalizedText(opt, i18n.language))
+                      .filter(Boolean)
+                      .join(', ');
+                  }
+                  
+                  return (
+                    <td key={answer.question_id} className="px-4 py-3 text-sm text-gray-900 dark:text-white min-w-[250px]">
+                      <div className="line-clamp-3">
+                        {displayAnswer || <span className="text-gray-400 italic">-</span>}
+                      </div>
+                    </td>
+                  );
+                })}
               </tr>
             ))}
           </tbody>
@@ -174,7 +203,7 @@ const Responses = () => {
       {Object.entries(summaryStats).map(([questionId, stat], idx) => (
         <Card key={questionId}>
           <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
-            Q{idx + 1}: {stat.question}
+            Q{idx + 1}: {getLocalizedText(stat.question, i18n.language)}
           </h3>
           
           {stat.type === 'text' ? (

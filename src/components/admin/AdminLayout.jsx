@@ -41,9 +41,9 @@ const AdminLayout = () => {
   };
   
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex" dir="inherit">
       {/* Sidebar - Desktop */}
-      <aside className="hidden lg:flex lg:flex-col lg:w-64 lg:fixed lg:inset-y-0 bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700">
+      <aside className="hidden lg:flex lg:flex-col lg:w-64 lg:fixed lg:inset-y-0 ltr:left-0 rtl:right-0 bg-white dark:bg-gray-800 ltr:border-r rtl:border-l border-gray-200 dark:border-gray-700">
         <div className="flex items-center gap-3 px-6 h-16 border-b border-gray-200 dark:border-gray-700">
           <div className="w-10 h-10 bg-primary-600 rounded-lg flex items-center justify-center">
             <FileText className="text-white" size={24} />
@@ -102,7 +102,7 @@ const AdminLayout = () => {
       {/* Sidebar - Mobile */}
       {sidebarOpen && (
         <div className="lg:hidden fixed inset-0 z-50 bg-gray-900/50" onClick={() => setSidebarOpen(false)}>
-          <aside className="fixed inset-y-0 left-0 w-64 bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700" onClick={(e) => e.stopPropagation()}>
+          <aside className="fixed inset-y-0 ltr:left-0 rtl:right-0 w-64 bg-white dark:bg-gray-800 ltr:border-r rtl:border-l border-gray-200 dark:border-gray-700" onClick={(e) => e.stopPropagation()}>
             <div className="flex items-center justify-between px-6 h-16 border-b border-gray-200 dark:border-gray-700">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 bg-primary-600 rounded-lg flex items-center justify-center">
@@ -159,7 +159,7 @@ const AdminLayout = () => {
       )}
       
       {/* Main Content */}
-      <div className="flex-1 lg:ml-64">
+      <div className="flex-1 ltr:lg:ml-64 rtl:lg:mr-64">
         {/* Header - Mobile */}
         <header className="lg:hidden bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 sticky top-0 z-40">
           <div className="px-4 h-16 flex items-center justify-between">

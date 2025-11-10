@@ -1,12 +1,11 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { ArrowLeft, Plus, Save, Trash2, Edit, GripVertical } from 'lucide-react';
+import { ArrowLeft, Plus, Save, Trash2, Edit, GripVertical, ChevronRight } from 'lucide-react';
 import { useSurveyStore } from '../../store/surveyStore';
 import Button from '../../components/common/Button';
 import Input from '../../components/common/Input';
 import MultiLangInput from '../../components/common/MultiLangInput';
-import Textarea from '../../components/common/Textarea';
 import Select from '../../components/common/Select';
 import Card from '../../components/common/Card';
 import Loading from '../../components/common/Loading';
@@ -14,12 +13,16 @@ import Modal from '../../components/common/Modal';
 import Checkbox from '../../components/common/Checkbox';
 import { initMultiLangText, hasAnyLanguage, getLocalizedText } from '../../utils/multiLang';
 import toast from 'react-hot-toast';
+import clsx from 'clsx';
 
 const SurveyBuilder = () => {
   const { t, i18n } = useTranslation();
   const navigate = useNavigate();
   const { id } = useParams();
   const isEdit = !!id;
+  
+  // Step state for wizard
+  const [currentStep, setCurrentStep] = useState(1);
   
   const { 
     currentPoll, 
@@ -54,6 +57,7 @@ const SurveyBuilder = () => {
   
   useEffect(() => {
     if (isEdit) {
+      setCurrentStep(2); // If editing, show questions step
       fetchPollById(id).then(poll => {
         setPollData({
           title: poll.title,
@@ -71,6 +75,39 @@ const SurveyBuilder = () => {
   
   const handlePollChange = (field, value) => {
     setPollData(prev => ({ ...prev, [field]: value }));
+  };
+  
+  const handleNextStep = async () => {
+    // Validate step 1 data
+    if (!hasAnyLanguage(pollData.title)) {
+      toast.error(t('validation.required'));
+      return;
+    }
+    
+    if (!pollData.start_date || !pollData.end_date) {
+      toast.error('Please fill in start and end dates');
+      return;
+    }
+    
+    try {
+      const pollPayload = {
+        ...pollData,
+        start_date: new Date(pollData.start_date).toISOString(),
+        end_date: new Date(pollData.end_date).toISOString(),
+      };
+      
+      if (isEdit) {
+        await updatePoll(id, pollPayload);
+        toast.success(t('admin.surveyUpdated'));
+        setCurrentStep(2);
+      } else {
+        const newPoll = await createPoll(pollPayload);
+        toast.success(t('admin.surveyCreated'));
+        navigate(`/admin/edit/${newPoll.id}`);
+      }
+    } catch (error) {
+      toast.error(error.message);
+    }
   };
   
   const handleSavePoll = async () => {
@@ -153,147 +190,245 @@ const SurveyBuilder = () => {
             {isEdit ? t('admin.editSurvey') : t('admin.createSurvey')}
           </h1>
         </div>
-        <Button onClick={handleSavePoll} loading={loading}>
-          <Save size={20} className="mr-2" />
-          {t('common.save')}
-        </Button>
+        {currentStep === 1 && (
+          <Button onClick={handleNextStep} loading={loading}>
+            {t('common.next')}
+            <ChevronRight size={20} className="ml-2" />
+          </Button>
+        )}
+        {currentStep === 2 && (
+          <Button onClick={handleSavePoll} loading={loading}>
+            <Save size={20} className="mr-2" />
+            {t('common.save')}
+          </Button>
+        )}
       </div>
       
-      <Card>
-        <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
-          Survey Details
-        </h2>
-        <div className="space-y-4">
-          <MultiLangInput
-            label={t('admin.surveyTitle')}
-            value={pollData.title}
-            onChange={(value) => handlePollChange('title', value)}
-            fullWidth
-            required
-          />
-          
-          <MultiLangInput
-            label={t('admin.surveyDescription')}
-            value={pollData.description}
-            onChange={(value) => handlePollChange('description', value)}
-            type="textarea"
-            fullWidth
-          />
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <Select
-              label={t('admin.status')}
-              value={pollData.status}
-              onChange={(e) => handlePollChange('status', e.target.value)}
-              fullWidth
-              options={[
-                { value: 'draft', label: t('admin.draft') },
-                { value: 'active', label: t('admin.active') },
-                { value: 'inactive', label: t('admin.inactive') },
-                { value: 'completed', label: t('admin.completed') },
-              ]}
-            />
-            
-            <Input
-              label={t('admin.startDate')}
-              type="date"
-              value={pollData.start_date}
-              onChange={(e) => handlePollChange('start_date', e.target.value)}
-              fullWidth
-            />
-            
-            <Input
-              label={t('admin.endDate')}
-              type="date"
-              value={pollData.end_date}
-              onChange={(e) => handlePollChange('end_date', e.target.value)}
-              fullWidth
-            />
+      {/* Steps Indicator */}
+      <div className="flex items-center justify-center gap-4">
+        <div className="flex items-center gap-2">
+          <div className={clsx(
+            'w-10 h-10 rounded-full flex items-center justify-center font-semibold',
+            currentStep === 1 
+              ? 'bg-blue-600 text-white' 
+              : 'bg-green-600 text-white'
+          )}>
+            1
           </div>
+          <span className={clsx(
+            'font-medium',
+            currentStep === 1 
+              ? 'text-gray-900 dark:text-white' 
+              : 'text-green-600 dark:text-green-400'
+          )}>
+            Survey Details
+          </span>
         </div>
-      </Card>
-      
-      {isEdit && (
-        <Card>
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
-              {t('admin.questions')} ({questions.length})
-            </h2>
-            <Button onClick={handleAddQuestion}>
-              <Plus size={20} className="mr-2" />
-              {t('admin.addQuestion')}
-            </Button>
+        
+        <div className="w-20 h-1 bg-gray-300 dark:bg-gray-600">
+          <div className={clsx(
+            'h-full bg-blue-600 transition-all duration-300',
+            currentStep === 2 ? 'w-full' : 'w-0'
+          )} />
+        </div>
+        
+        <div className="flex items-center gap-2">
+          <div className={clsx(
+            'w-10 h-10 rounded-full flex items-center justify-center font-semibold',
+            currentStep === 2 
+              ? 'bg-blue-600 text-white' 
+              : 'bg-gray-300 dark:bg-gray-600 text-gray-600 dark:text-gray-400'
+          )}>
+            2
           </div>
-          
-          {questions.length === 0 ? (
-            <div className="text-center py-8 text-gray-500 dark:text-gray-400">
-              No questions yet. Add your first question!
+          <span className={clsx(
+            'font-medium',
+            currentStep === 2 
+              ? 'text-gray-900 dark:text-white' 
+              : 'text-gray-400 dark:text-gray-500'
+          )}>
+            Questions
+          </span>
+        </div>
+      </div>
+      
+      {/* Step 1: Survey Details */}
+      {currentStep === 1 && (
+        <Card>
+          <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+            Survey Details
+          </h2>
+          <div className="space-y-4">
+            <MultiLangInput
+              label={t('admin.surveyTitle')}
+              value={pollData.title}
+              onChange={(value) => handlePollChange('title', value)}
+              fullWidth
+              required
+            />
+            
+            <MultiLangInput
+              label={t('admin.surveyDescription')}
+              value={pollData.description}
+              onChange={(value) => handlePollChange('description', value)}
+              type="textarea"
+              fullWidth
+            />
+            
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <Select
+                label={t('admin.status')}
+                value={pollData.status}
+                onChange={(e) => handlePollChange('status', e.target.value)}
+                fullWidth
+                options={[
+                  { value: 'draft', label: t('admin.draft') },
+                  { value: 'active', label: t('admin.active') },
+                  { value: 'inactive', label: t('admin.inactive') },
+                  { value: 'completed', label: t('admin.completed') },
+                ]}
+              />
+              
+              <Input
+                label={t('admin.startDate')}
+                type="date"
+                value={pollData.start_date}
+                onChange={(e) => handlePollChange('start_date', e.target.value)}
+                fullWidth
+              />
+              
+              <Input
+                label={t('admin.endDate')}
+                type="date"
+                value={pollData.end_date}
+                onChange={(e) => handlePollChange('end_date', e.target.value)}
+                fullWidth
+              />
             </div>
-          ) : (
-            <div className="space-y-3">
-              {questions.map((question, index) => (
-                <div
-                  key={question.id}
-                  className="flex items-start gap-3 p-4 bg-gray-50 dark:bg-gray-700 rounded-lg"
-                >
-                  <div className="text-gray-400 cursor-move mt-1">
-                    <GripVertical size={20} />
-                  </div>
-                  
-                  <div className="flex-1">
-                    <div className="flex items-start justify-between mb-2">
-                      <div className="flex-1">
-                        <div className="flex items-center gap-2 mb-1">
-                          <span className="text-sm font-medium text-gray-500 dark:text-gray-400">
-                            Q{index + 1}
-                          </span>
-                          {question.is_required && (
-                            <span className="text-xs px-2 py-0.5 bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300 rounded">
-                              {t('common.required')}
+          </div>
+        </Card>
+      )}
+      
+      {/* Step 2: Questions */}
+      {currentStep === 2 && (
+        <>
+          {/* Survey Details Summary Card */}
+          <Card>
+            <div className="flex items-start justify-between">
+              <div className="flex-1">
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
+                  {getLocalizedText(pollData.title, i18n.language)}
+                </h3>
+                {hasAnyLanguage(pollData.description) && (
+                  <p className="text-gray-600 dark:text-gray-400 mb-3">
+                    {getLocalizedText(pollData.description, i18n.language)}
+                  </p>
+                )}
+                <div className="flex items-center gap-4 text-sm text-gray-600 dark:text-gray-400">
+                  <span className={clsx(
+                    'px-2 py-1 rounded',
+                    pollData.status === 'active' ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300' :
+                    pollData.status === 'draft' ? 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300' :
+                    'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300'
+                  )}>
+                    {pollData.status}
+                  </span>
+                  <span>{pollData.start_date} - {pollData.end_date}</span>
+                </div>
+              </div>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setCurrentStep(1)}
+              >
+                <Edit size={16} className="mr-1" />
+                Edit Details
+              </Button>
+            </div>
+          </Card>
+          
+          {/* Questions Card */}
+          <Card>
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
+                {t('admin.questions')} ({questions.length})
+              </h2>
+              <Button onClick={handleAddQuestion}>
+                <Plus size={20} className="mr-2" />
+                {t('admin.addQuestion')}
+              </Button>
+            </div>
+            
+            {questions.length === 0 ? (
+              <div className="text-center py-8 text-gray-500 dark:text-gray-400">
+                No questions yet. Add your first question!
+              </div>
+            ) : (
+              <div className="space-y-3">
+                {questions.map((question, index) => (
+                  <div
+                    key={question.id}
+                    className="flex items-start gap-3 p-4 bg-gray-50 dark:bg-gray-700 rounded-lg"
+                  >
+                    <div className="text-gray-400 cursor-move mt-1">
+                      <GripVertical size={20} />
+                    </div>
+                    
+                    <div className="flex-1">
+                      <div className="flex items-start justify-between mb-2">
+                        <div className="flex-1">
+                          <div className="flex items-center gap-2 mb-1">
+                            <span className="text-sm font-medium text-gray-500 dark:text-gray-400">
+                              Q{index + 1}
                             </span>
-                          )}
-                          <span className="text-xs px-2 py-0.5 bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-300 rounded">
-                            {question.question_type === 'mcq' ? t('admin.mcq') : t('admin.text')}
-                          </span>
-                        </div>
-                        <p className="text-gray-900 dark:text-white font-medium">
-                          {getLocalizedText(question.question_text, i18n.language)}
-                        </p>
-                        
-                        {question.question_type === 'mcq' && question.options && (
-                          <div className="mt-2 ml-4 space-y-1">
-                            {question.options.map((option, idx) => (
-                              <div key={option.id} className="text-sm text-gray-600 dark:text-gray-400">
-                                • {getLocalizedText(option.option_text, i18n.language)}
-                              </div>
-                            ))}
+                            {question.is_required && (
+                              <span className="text-xs px-2 py-0.5 bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300 rounded">
+                                {t('common.required')}
+                              </span>
+                            )}
+                            <span className="text-xs px-2 py-0.5 bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-300 rounded">
+                              {question.question_type === 'mcq' ? t('admin.mcq') : t('admin.text')}
+                            </span>
                           </div>
-                        )}
-                      </div>
-                      
-                      <div className="flex items-center gap-2">
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          onClick={() => handleEditQuestion(question)}
-                        >
-                          <Edit size={16} />
-                        </Button>
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          onClick={() => setDeleteModal({ isOpen: true, questionId: question.id })}
-                        >
-                          <Trash2 size={16} className="text-red-600" />
-                        </Button>
+                          <p className="text-gray-900 dark:text-white font-medium">
+                            {getLocalizedText(question.question_text, i18n.language)}
+                          </p>
+                          
+                          {question.question_type === 'mcq' && question.options && (
+                            <div className="mt-2 ml-4 space-y-1">
+                              {question.options.map((option, idx) => (
+                                <div key={option.id} className="text-sm text-gray-600 dark:text-gray-400">
+                                  • {getLocalizedText(option.option_text, i18n.language)}
+                                </div>
+                              ))}
+                            </div>
+                          )}
+                        </div>
+                        
+                        <div className="flex items-center gap-2">
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => handleEditQuestion(question)}
+                          >
+                            <Edit size={16} />
+                          </Button>
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => setDeleteModal({ isOpen: true, questionId: question.id })}
+                          >
+                            <Trash2 size={16} className="text-red-600" />
+                          </Button>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              ))}
-            </div>
-          )}
-        </Card>
+                ))}
+              </div>
+            )}
+          </Card>
+        </>
       )}
       
       <QuestionModal

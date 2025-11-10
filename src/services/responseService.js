@@ -84,6 +84,7 @@ export const responseService = {
           
           const selectedOptions = mcqAnswers.map(a => {
             const option = mockDB.mcq_options.find(o => o.id === a.option_id);
+            // Return the raw option_text object (multilang) instead of string
             return option ? option.option_text : '';
           });
           
@@ -91,7 +92,8 @@ export const responseService = {
             question_id: question.id,
             question_text: question.question_text,
             question_type: 'mcq',
-            answer: selectedOptions.join(', '),
+            answer: selectedOptions, // Return array of multilang objects
+            selectedOptionTexts: selectedOptions, // For easier access
           };
         } else {
           const textAnswer = mockDB.text_answers.find(
