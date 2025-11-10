@@ -95,7 +95,7 @@ const Responses = () => {
               </div>
               <div>
                 <h3 className="font-semibold text-gray-900 dark:text-white">
-                  Response #{index + 1}
+                  {t('admin.responseNumber')}{index + 1}
                 </h3>
                 <div className="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400">
                   <Calendar size={14} />
@@ -120,11 +120,11 @@ const Responses = () => {
               return (
                 <div key={idx}>
                   <p className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                    Q{idx + 1}: {getLocalizedText(answer.question_text, i18n.language)}
+                    {t('admin.questionNumber')}{idx + 1}: {getLocalizedText(answer.question_text, i18n.language)}
                   </p>
                   <div className="ml-4 p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
                     <p className="text-gray-900 dark:text-white">
-                      {displayAnswer || <span className="text-gray-400 italic">No answer</span>}
+                      {displayAnswer || <span className="text-gray-400 italic">{t('admin.noAnswer')}</span>}
                     </p>
                   </div>
                 </div>
@@ -203,7 +203,7 @@ const Responses = () => {
       {Object.entries(summaryStats).map(([questionId, stat], idx) => (
         <Card key={questionId}>
           <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
-            Q{idx + 1}: {getLocalizedText(stat.question, i18n.language)}
+            {t('admin.questionNumber')}{idx + 1}: {getLocalizedText(stat.question, i18n.language)}
           </h3>
           
           {stat.type === 'text' ? (
@@ -245,7 +245,7 @@ const Responses = () => {
                 );
               })}
               <p className="text-xs text-gray-500 dark:text-gray-400 mt-2">
-                Total responses: {stat.total}
+                {t('admin.totalResponsesText')}: {stat.total}
               </p>
             </div>
           )}
@@ -257,7 +257,7 @@ const Responses = () => {
   return (
     <div className="space-y-6">
       <div className="flex items-center gap-4">
-        <Button variant="ghost" onClick={() => navigate('/admin')}>
+        <Button variant="ghost" onClick={() => navigate('/admin/surveys')}>
           <ArrowLeft size={20} />
         </Button>
         <div className="flex-1">
@@ -287,7 +287,7 @@ const Responses = () => {
             {t('admin.noResponses')}
           </h3>
           <p className="text-gray-600 dark:text-gray-400">
-            No one has submitted this survey yet
+            {t('admin.noOneSubmitted')}
           </p>
         </Card>
       ) : (

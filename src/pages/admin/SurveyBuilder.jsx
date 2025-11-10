@@ -77,7 +77,7 @@ const SurveyBuilder = () => {
         });
       }).catch(() => {
         toast.error('Survey not found');
-        navigate('/admin');
+        navigate('/admin/surveys');
       });
     }
   }, [id, isEdit]);
@@ -112,7 +112,7 @@ const SurveyBuilder = () => {
       } else {
         const newPoll = await createPoll(pollPayload);
         toast.success(t('admin.surveyCreated'));
-        navigate(`/admin/edit/${newPoll.id}`);
+        navigate(`/admin/surveys/edit/${newPoll.id}`);
       }
     } catch (error) {
       toast.error(error.message);
@@ -135,10 +135,11 @@ const SurveyBuilder = () => {
       if (isEdit) {
         await updatePoll(id, pollPayload);
         toast.success(t('admin.surveyUpdated'));
+        navigate('/admin/surveys');
       } else {
         const newPoll = await createPoll(pollPayload);
         toast.success(t('admin.surveyCreated'));
-        navigate(`/admin/edit/${newPoll.id}`);
+        navigate('/admin/surveys');
       }
     } catch (error) {
       toast.error(error.message);
@@ -274,7 +275,7 @@ const SurveyBuilder = () => {
       <div className="flex items-center gap-4">
         <Button
           variant="ghost"
-          onClick={() => navigate('/admin')}
+          onClick={() => navigate('/admin/surveys')}
         >
           <ArrowLeft size={20} />
         </Button>
@@ -314,7 +315,7 @@ const SurveyBuilder = () => {
               ? 'text-gray-900 dark:text-white' 
               : 'text-green-600 dark:text-green-400'
           )}>
-            Survey Details
+            {t('admin.surveyDetails')}
           </span>
         </div>
         
@@ -340,7 +341,7 @@ const SurveyBuilder = () => {
               ? 'text-gray-900 dark:text-white' 
               : 'text-gray-400 dark:text-gray-500'
           )}>
-            Questions
+            {t('admin.questions')}
           </span>
         </div>
       </div>
@@ -349,7 +350,7 @@ const SurveyBuilder = () => {
       {currentStep === 1 && (
         <Card>
           <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
-            Survey Details
+            {t('admin.surveyDetails')}
           </h2>
           <div className="space-y-4">
             <MultiLangInput
@@ -424,7 +425,7 @@ const SurveyBuilder = () => {
                     pollData.status === 'draft' ? 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300' :
                     'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300'
                   )}>
-                    {pollData.status}
+                    {t(`admin.${pollData.status}`)}
                   </span>
                   <span>{pollData.start_date} - {pollData.end_date}</span>
                 </div>
@@ -435,7 +436,7 @@ const SurveyBuilder = () => {
                 onClick={() => setCurrentStep(1)}
               >
                 <Edit size={16} className="ltr:mr-1 rtl:ml-1" />
-                Edit Details
+                {t('admin.editDetails')}
               </Button>
             </div>
           </Card>
@@ -563,7 +564,7 @@ const SurveyBuilder = () => {
             
             {questions.length === 0 && !questionForm.isOpen ? (
               <div className="text-center py-8 text-gray-500 dark:text-gray-400">
-                No questions yet. Add your first question!
+                {t('admin.noQuestionsYet')}
               </div>
             ) : (
               <div className="space-y-3">
@@ -586,7 +587,7 @@ const SurveyBuilder = () => {
                         <div className="flex-1">
                           <div className="flex items-center gap-2 mb-1">
                             <span className="text-sm font-medium text-gray-500 dark:text-gray-400">
-                              Q{index + 1}
+                              {t('admin.questionNumber')}{index + 1}
                             </span>
                             {question.is_required && (
                               <span className="text-xs px-2 py-0.5 bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300 rounded">

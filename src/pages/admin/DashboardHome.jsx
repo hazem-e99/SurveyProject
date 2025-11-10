@@ -154,7 +154,7 @@ const DashboardHome = () => {
         
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           <button
-            onClick={() => navigate('/admin/create')}
+            onClick={() => navigate('/admin/surveys/create')}
             className="flex items-center gap-4 p-4 rounded-lg border-2 border-dashed border-gray-300 dark:border-gray-600 hover:border-primary-500 dark:hover:border-primary-500 hover:bg-primary-50 dark:hover:bg-primary-900/10 transition-all group"
           >
             <div className="p-3 rounded-lg bg-primary-100 dark:bg-primary-900/30 group-hover:bg-primary-200 dark:group-hover:bg-primary-900/50 transition-colors">
@@ -171,7 +171,7 @@ const DashboardHome = () => {
           </button>
           
           <button
-            onClick={() => navigate('/admin')}
+            onClick={() => navigate('/admin/surveys')}
             className="flex items-center gap-4 p-4 rounded-lg border-2 border-dashed border-gray-300 dark:border-gray-600 hover:border-purple-500 dark:hover:border-purple-500 hover:bg-purple-50 dark:hover:bg-purple-900/10 transition-all group"
           >
             <div className="p-3 rounded-lg bg-purple-100 dark:bg-purple-900/30 group-hover:bg-purple-200 dark:group-hover:bg-purple-900/50 transition-colors">
@@ -203,7 +203,7 @@ const DashboardHome = () => {
           <Button
             variant="ghost"
             size="sm"
-            onClick={() => navigate('/admin')}
+            onClick={() => navigate('/admin/surveys')}
           >
             {t('common.viewAll')}
           </Button>
@@ -219,7 +219,7 @@ const DashboardHome = () => {
               {t('admin.noSurveysDesc')}
             </p>
             <div className="mt-6">
-              <Button onClick={() => navigate('/admin/create')}>
+              <Button onClick={() => navigate('/admin/surveys/create')}>
                 <PlusCircle size={18} />
                 {t('admin.createFirstSurvey')}
               </Button>
@@ -231,7 +231,7 @@ const DashboardHome = () => {
               <div
                 key={survey.id}
                 className="flex items-center justify-between p-4 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors cursor-pointer"
-                onClick={() => navigate(`/admin/edit/${survey.id}`)}
+                onClick={() => navigate(`/admin/surveys/edit/${survey.id}`)}
               >
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-3">

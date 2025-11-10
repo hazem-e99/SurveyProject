@@ -86,7 +86,7 @@ const Dashboard = () => {
           </p>
         </div>
         <Button
-          onClick={() => navigate('/admin/create')}
+          onClick={() => navigate('/admin/surveys/create')}
           size="lg"
         >
           <Plus size={20} className="mr-2" />
@@ -101,9 +101,9 @@ const Dashboard = () => {
             {t('admin.noSurveys')}
           </h3>
           <p className="text-gray-600 dark:text-gray-400 mb-6">
-            Create your first survey to get started
+            {t('admin.createFirstSurvey')}
           </p>
-          <Button onClick={() => navigate('/admin/surveys/new')}>
+          <Button onClick={() => navigate('/admin/surveys/create')}>
             <Plus size={20} className="mr-2" />
             {t('admin.createSurvey')}
           </Button>
@@ -144,7 +144,7 @@ const Dashboard = () => {
                   <Button
                     variant="outline"
                     size="sm"
-                    onClick={() => navigate(`/admin/edit/${poll.id}`)}
+                    onClick={() => navigate(`/admin/surveys/edit/${poll.id}`)}
                     className="flex-1"
                   >
                     <Edit size={16} className="mr-1" />

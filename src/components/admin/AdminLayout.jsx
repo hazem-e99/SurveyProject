@@ -29,13 +29,13 @@ const AdminLayout = () => {
     {
       icon: FileText,
       label: t('admin.surveys'),
-      path: '/admin',
+      path: '/admin/surveys',
     },
   ];
   
   const isActive = (path) => {
-    if (path === '/admin') {
-      return location.pathname === '/admin';
+    if (path === '/admin/dashboard') {
+      return location.pathname === '/admin' || location.pathname === '/admin/dashboard';
     }
     return location.pathname.startsWith(path);
   };
@@ -53,7 +53,7 @@ const AdminLayout = () => {
               {t('common.appName')}
             </h1>
             <p className="text-xs text-gray-500 dark:text-gray-400">
-              Admin Panel
+              {t('admin.adminPanel')}
             </p>
           </div>
         </div>

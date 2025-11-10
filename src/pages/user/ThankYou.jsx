@@ -32,7 +32,7 @@ const ThankYou = () => {
         
         <div className="p-4 bg-green-50 dark:bg-green-900/20 rounded-lg mb-6">
           <p className="text-sm text-green-800 dark:text-green-300">
-            Your feedback helps us improve our services and better serve you.
+            {t('survey.feedbackMessage')}
           </p>
         </div>
         

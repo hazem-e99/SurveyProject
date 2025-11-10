@@ -60,10 +60,11 @@ function App() {
               </ProtectedRoute>
             }
           >
-            <Route index element={<Dashboard />} />
+            <Route index element={<DashboardHome />} />
             <Route path="dashboard" element={<DashboardHome />} />
-            <Route path="create" element={<SurveyBuilder />} />
-            <Route path="edit/:id" element={<SurveyBuilder />} />
+            <Route path="surveys" element={<Dashboard />} />
+            <Route path="surveys/create" element={<SurveyBuilder />} />
+            <Route path="surveys/edit/:id" element={<SurveyBuilder />} />
             <Route path="responses" element={<Responses />} />
             <Route path="responses/:id" element={<Responses />} />
           </Route>
