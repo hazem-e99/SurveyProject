@@ -28,15 +28,15 @@ const MultiLangInput = forwardRef(({
   ];
 
   return (
-    <div className={clsx('space-y-3', fullWidth && 'w-full')}>
+    <div className={clsx('space-y-2 sm:space-y-3', fullWidth && 'w-full')}>
       {label && (
-        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+        <label className="block text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300">
           {label}
-          {required && <span className="text-red-500 ml-1">*</span>}
+          {required && <span className="text-red-500 ltr:ml-1 rtl:mr-1">*</span>}
         </label>
       )}
       
-      <div className="space-y-3">
+      <div className="space-y-2 sm:space-y-3">
         {languages.map((lang) => (
           <div key={lang.code} className="space-y-1">
             <label className="block text-xs font-medium text-gray-600 dark:text-gray-400">
@@ -49,7 +49,7 @@ const MultiLangInput = forwardRef(({
                 onChange={(e) => handleChange(lang.code, e.target.value)}
                 dir={lang.dir}
                 className={clsx(
-                  'block w-full px-4 py-2 rounded-lg border transition-colors resize-none',
+                  'block w-full px-3 sm:px-4 py-2 rounded-lg border transition-colors resize-none text-sm sm:text-base',
                   'bg-white dark:bg-gray-800',
                   'text-gray-900 dark:text-white',
                   'placeholder-gray-400 dark:placeholder-gray-500',
@@ -69,7 +69,7 @@ const MultiLangInput = forwardRef(({
                 onChange={(e) => handleChange(lang.code, e.target.value)}
                 dir={lang.dir}
                 className={clsx(
-                  'block w-full px-4 py-2 rounded-lg border transition-colors',
+                  'block w-full px-3 sm:px-4 py-2 rounded-lg border transition-colors text-sm sm:text-base',
                   'bg-white dark:bg-gray-800',
                   'text-gray-900 dark:text-white',
                   'placeholder-gray-400 dark:placeholder-gray-500',
@@ -86,7 +86,7 @@ const MultiLangInput = forwardRef(({
       </div>
       
       {error && (
-        <p className="mt-1 text-sm text-red-600 dark:text-red-400">
+        <p className="mt-1 text-xs sm:text-sm text-red-600 dark:text-red-400">
           {error}
         </p>
       )}

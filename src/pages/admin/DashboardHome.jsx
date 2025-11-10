@@ -102,37 +102,37 @@ const DashboardHome = () => {
   ];
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 sm:space-y-6">
       {/* Page Header */}
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4">
+        <div className="min-w-0">
+          <h1 className="text-xl sm:text-2xl lg:text-2xl font-bold text-gray-900 dark:text-white truncate text-start">
             {t('admin.dashboard')}
           </h1>
-          <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+          <p className="mt-1 text-sm text-gray-500 dark:text-gray-400 truncate text-start">
             {t('admin.dashboardSubtitle')}
           </p>
         </div>
       </div>
 
       {/* Stats Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
         {statCards.map((stat, index) => (
           <Card key={index} className="hover:shadow-lg transition-shadow">
             <div className="flex items-start justify-between">
-              <div className="flex-1">
-                <p className="text-sm font-medium text-gray-600 dark:text-gray-400">
+              <div className="flex-1 min-w-0">
+                <p className="text-xs sm:text-sm font-medium text-gray-600 dark:text-gray-400 truncate text-start">
                   {stat.title}
                 </p>
-                <p className="mt-2 text-3xl font-bold text-gray-900 dark:text-white">
+                <p className="mt-2 text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white text-start">
                   {stat.value}
                 </p>
               </div>
               <div className={clsx(
-                'p-3 rounded-lg',
+                'p-2.5 sm:p-3 rounded-lg flex-shrink-0',
                 stat.bgColor
               )}>
-                <stat.icon className={stat.iconColor} size={24} />
+                <stat.icon className={stat.iconColor} size={20} />
               </div>
             </div>
           </Card>
@@ -141,30 +141,30 @@ const DashboardHome = () => {
 
       {/* Quick Actions */}
       <Card>
-        <div className="flex items-center justify-between mb-6">
-          <div>
-            <h2 className="text-lg font-semibold text-gray-900 dark:text-white">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4 mb-4 sm:mb-6">
+          <div className="min-w-0">
+            <h2 className="text-base sm:text-lg font-semibold text-gray-900 dark:text-white truncate text-start">
               {t('admin.quickActions')}
             </h2>
-            <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+            <p className="mt-1 text-xs sm:text-sm text-gray-500 dark:text-gray-400 truncate text-start">
               {t('admin.quickActionsSubtitle')}
             </p>
           </div>
         </div>
         
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
           <button
             onClick={() => navigate('/admin/surveys/create')}
-            className="flex items-center gap-4 p-4 rounded-lg border-2 border-dashed border-gray-300 dark:border-gray-600 hover:border-primary-500 dark:hover:border-primary-500 hover:bg-primary-50 dark:hover:bg-primary-900/10 transition-all group"
+            className="flex items-start sm:items-center gap-3 sm:gap-4 p-3 sm:p-4 rounded-lg border-2 border-dashed border-gray-300 dark:border-gray-600 hover:border-primary-500 dark:hover:border-primary-500 hover:bg-primary-50 dark:hover:bg-primary-900/10 transition-all group text-left"
           >
-            <div className="p-3 rounded-lg bg-primary-100 dark:bg-primary-900/30 group-hover:bg-primary-200 dark:group-hover:bg-primary-900/50 transition-colors">
-              <PlusCircle className="text-primary-600 dark:text-primary-400" size={24} />
+            <div className="p-2.5 sm:p-3 rounded-lg bg-primary-100 dark:bg-primary-900/30 group-hover:bg-primary-200 dark:group-hover:bg-primary-900/50 transition-colors flex-shrink-0">
+              <PlusCircle className="text-primary-600 dark:text-primary-400" size={20} />
             </div>
-            <div className="text-left">
-              <p className="font-medium text-gray-900 dark:text-white">
+            <div className="flex-1 min-w-0">
+              <p className="text-sm sm:text-base font-medium text-gray-900 dark:text-white truncate text-start">
                 {t('admin.createSurvey')}
               </p>
-              <p className="text-sm text-gray-500 dark:text-gray-400">
+              <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 mt-0.5 line-clamp-2 text-start">
                 {t('admin.createSurveyDesc')}
               </p>
             </div>
@@ -172,16 +172,16 @@ const DashboardHome = () => {
           
           <button
             onClick={() => navigate('/admin/surveys')}
-            className="flex items-center gap-4 p-4 rounded-lg border-2 border-dashed border-gray-300 dark:border-gray-600 hover:border-purple-500 dark:hover:border-purple-500 hover:bg-purple-50 dark:hover:bg-purple-900/10 transition-all group"
+            className="flex items-start sm:items-center gap-3 sm:gap-4 p-3 sm:p-4 rounded-lg border-2 border-dashed border-gray-300 dark:border-gray-600 hover:border-purple-500 dark:hover:border-purple-500 hover:bg-purple-50 dark:hover:bg-purple-900/10 transition-all group text-left"
           >
-            <div className="p-3 rounded-lg bg-purple-100 dark:bg-purple-900/30 group-hover:bg-purple-200 dark:group-hover:bg-purple-900/50 transition-colors">
-              <FileText className="text-purple-600 dark:text-purple-400" size={24} />
+            <div className="p-2.5 sm:p-3 rounded-lg bg-purple-100 dark:bg-purple-900/30 group-hover:bg-purple-200 dark:group-hover:bg-purple-900/50 transition-colors flex-shrink-0">
+              <FileText className="text-purple-600 dark:text-purple-400" size={20} />
             </div>
-            <div className="text-left">
-              <p className="font-medium text-gray-900 dark:text-white">
+            <div className="flex-1 min-w-0">
+              <p className="text-sm sm:text-base font-medium text-gray-900 dark:text-white truncate text-start">
                 {t('admin.viewSurveys')}
               </p>
-              <p className="text-sm text-gray-500 dark:text-gray-400">
+              <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 mt-0.5 line-clamp-2 text-start">
                 {t('admin.viewSurveysDesc')}
               </p>
             </div>
@@ -191,12 +191,12 @@ const DashboardHome = () => {
 
       {/* Recent Surveys */}
       <Card>
-        <div className="flex items-center justify-between mb-6">
-          <div>
-            <h2 className="text-lg font-semibold text-gray-900 dark:text-white">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4 mb-4 sm:mb-6">
+          <div className="min-w-0">
+            <h2 className="text-base sm:text-lg font-semibold text-gray-900 dark:text-white truncate text-start">
               {t('admin.recentSurveys')}
             </h2>
-            <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+            <p className="mt-1 text-xs sm:text-sm text-gray-500 dark:text-gray-400 truncate text-start">
               {t('admin.recentSurveysSubtitle')}
             </p>
           </div>
@@ -204,42 +204,43 @@ const DashboardHome = () => {
             variant="ghost"
             size="sm"
             onClick={() => navigate('/admin/surveys')}
+            className="self-start sm:self-auto"
           >
             {t('common.viewAll')}
           </Button>
         </div>
 
         {stats.recentSurveys.length === 0 ? (
-          <div className="text-center py-12">
-            <FileText className="mx-auto h-12 w-12 text-gray-400" />
-            <h3 className="mt-4 text-sm font-medium text-gray-900 dark:text-white">
+          <div className="text-center py-8 sm:py-12">
+            <FileText className="mx-auto h-10 w-10 sm:h-12 sm:w-12 text-gray-400" />
+            <h3 className="mt-3 sm:mt-4 text-sm font-medium text-gray-900 dark:text-white">
               {t('admin.noSurveys')}
             </h3>
-            <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
+            <p className="mt-2 text-sm text-gray-500 dark:text-gray-400 px-4">
               {t('admin.noSurveysDesc')}
             </p>
-            <div className="mt-6">
-              <Button onClick={() => navigate('/admin/surveys/create')}>
-                <PlusCircle size={18} />
-                {t('admin.createFirstSurvey')}
+            <div className="mt-4 sm:mt-6">
+              <Button onClick={() => navigate('/admin/surveys/create')} size="sm">
+                <PlusCircle size={16} />
+                <span className="ml-2">{t('admin.createFirstSurvey')}</span>
               </Button>
             </div>
           </div>
         ) : (
-          <div className="space-y-4">
+          <div className="space-y-3 sm:space-y-4">
             {stats.recentSurveys.map((survey) => (
               <div
                 key={survey.id}
-                className="flex items-center justify-between p-4 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors cursor-pointer"
+                className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 p-3 sm:p-4 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors cursor-pointer"
                 onClick={() => navigate(`/admin/surveys/edit/${survey.id}`)}
               >
                 <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-3">
-                    <h3 className="text-sm font-medium text-gray-900 dark:text-white truncate">
+                  <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3">
+                    <h3 className="text-sm font-medium text-gray-900 dark:text-white truncate text-start">
                       {getLocalizedText(survey.title, i18n.language)}
                     </h3>
                     <span className={clsx(
-                      'inline-flex items-center px-2 py-1 rounded-full text-xs font-medium',
+                      'inline-flex items-center self-start px-2 py-0.5 sm:py-1 rounded-full text-xs font-medium',
                       survey.status === 'active'
                         ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400'
                         : 'bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-gray-400'
@@ -247,12 +248,12 @@ const DashboardHome = () => {
                       {survey.status === 'active' ? t('admin.active') : t('admin.draft')}
                     </span>
                   </div>
-                  <p className="mt-1 text-sm text-gray-500 dark:text-gray-400 truncate">
+                  <p className="mt-1 text-xs sm:text-sm text-gray-500 dark:text-gray-400 line-clamp-2 text-start">
                     {getLocalizedText(survey.description, i18n.language)}
                   </p>
                   <div className="mt-2 flex items-center gap-4 text-xs text-gray-500 dark:text-gray-400">
                     <span className="flex items-center gap-1">
-                      <Clock size={14} />
+                      <Clock size={12} />
                       {format(new Date(survey.created_at), 'MMM d, yyyy')}
                     </span>
                   </div>

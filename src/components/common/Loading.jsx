@@ -16,7 +16,7 @@ const Loading = ({ size = 'md', fullScreen = false, text }) => {
         )}
       />
       {text && (
-        <p className="text-gray-600 dark:text-gray-400 text-sm">{text}</p>
+        <p className="text-gray-600 dark:text-gray-400 text-sm text-start">{text}</p>
       )}
     </div>
   );

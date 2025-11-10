@@ -75,104 +75,109 @@ const Dashboard = () => {
   }
   
   return (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
+    <div className="space-y-4 sm:space-y-6">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4">
+        <div className="min-w-0">
+          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white truncate text-start">
             {t('admin.surveys')}
           </h1>
-          <p className="text-gray-600 dark:text-gray-400 mt-1">
+          <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400 mt-1 truncate text-start">
             {polls.length} {t('admin.surveys')}
           </p>
         </div>
         <Button
           onClick={() => navigate('/admin/surveys/create')}
-          size="lg"
+          size="md"
+          className="sm:size-lg self-start sm:self-auto"
         >
-          <Plus size={20} className="mr-2" />
-          {t('admin.createSurvey')}
+          <Plus size={18} className="ltr:mr-2 rtl:ml-2" />
+          <span className="hidden sm:inline">{t('admin.createSurvey')}</span>
+          <span className="sm:hidden">{t('common.create')}</span>
         </Button>
       </div>
       
       {polls.length === 0 ? (
-        <Card className="text-center py-12">
-          <BarChart size={64} className="mx-auto text-gray-400 mb-4" />
-          <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
+        <Card className="text-center py-8 sm:py-12">
+          <BarChart size={48} className="sm:w-16 sm:h-16 mx-auto text-gray-400 mb-4" />
+          <h3 className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-white mb-2">
             {t('admin.noSurveys')}
           </h3>
-          <p className="text-gray-600 dark:text-gray-400 mb-6">
+          <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400 mb-4 sm:mb-6 px-4">
             {t('admin.createFirstSurvey')}
           </p>
-          <Button onClick={() => navigate('/admin/surveys/create')}>
-            <Plus size={20} className="mr-2" />
+          <Button onClick={() => navigate('/admin/surveys/create')} size="sm">
+            <Plus size={18} className="ltr:mr-2 rtl:ml-2" />
             {t('admin.createSurvey')}
           </Button>
         </Card>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6">
           {polls.map((poll) => (
             <Card key={poll.id} hover className="flex flex-col">
-              <div className="flex items-start justify-between mb-4">
-                <div className="flex-1">
-                  <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2 line-clamp-2">
+              <div className="flex items-start justify-between mb-3 sm:mb-4 gap-3">
+                <div className="flex-1 min-w-0">
+                  <h3 className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-white mb-2 line-clamp-2 text-start">
                     {getLocalizedText(poll.title, i18n.language)}
                   </h3>
-                  <p className="text-sm text-gray-600 dark:text-gray-400 line-clamp-2">
+                  <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 line-clamp-2 text-start">
                     {getLocalizedText(poll.description, i18n.language)}
                   </p>
                 </div>
-                <span className={`px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(poll.status)}`}>
+                <span className={`px-2 py-0.5 sm:py-1 rounded-full text-xs font-medium whitespace-nowrap flex-shrink-0 ${getStatusColor(poll.status)}`}>
                   {t(`admin.${poll.status}`)}
                 </span>
               </div>
               
-              <div className="mt-auto space-y-3">
-                <div className="flex items-center justify-between text-sm">
-                  <span className="text-gray-500 dark:text-gray-400">
+              <div className="mt-auto space-y-2 sm:space-y-3">
+                <div className="flex items-center justify-between text-xs sm:text-sm">
+                  <span className="text-gray-500 dark:text-gray-400 text-start">
                     {t('admin.totalResponses')}:
                   </span>
-                  <span className="font-semibold text-gray-900 dark:text-white">
+                  <span className="font-semibold text-gray-900 dark:text-white text-end">
                     {responseCounts[poll.id] || 0}
                   </span>
                 </div>
                 
-                <div className="text-xs text-gray-500 dark:text-gray-400">
+                <div className="text-xs text-gray-500 dark:text-gray-400 text-start">
                   {t('admin.createdAt')}: {format(new Date(poll.created_at), 'MMM d, yyyy')}
                 </div>
                 
-                <div className="flex items-center gap-2 pt-3 border-t border-gray-200 dark:border-gray-700">
+                <div className="flex items-center gap-2 pt-2 sm:pt-3 border-t border-gray-200 dark:border-gray-700">
                   <Button
                     variant="outline"
                     size="sm"
                     onClick={() => navigate(`/admin/surveys/edit/${poll.id}`)}
-                    className="flex-1"
+                    className="flex-1 text-xs sm:text-sm"
                   >
-                    <Edit size={16} className="mr-1" />
-                    {t('common.edit')}
+                    <Edit size={14} className="ltr:mr-1 rtl:ml-1" />
+                    <span className="hidden sm:inline">{t('common.edit')}</span>
                   </Button>
                   
                   <Button
                     variant="secondary"
                     size="sm"
                     onClick={() => navigate(`/admin/responses/${poll.id}`)}
+                    className="px-2 sm:px-3"
                   >
-                    <Eye size={16} />
+                    <Eye size={14} />
                   </Button>
                   
                   <Button
                     variant="secondary"
                     size="sm"
                     onClick={() => handleCopyLink(poll.id)}
+                    className="px-2 sm:px-3"
                   >
-                    <Copy size={16} />
+                    <Copy size={14} />
                   </Button>
                   
                   <Button
                     variant="danger"
                     size="sm"
                     onClick={() => setDeleteModal({ isOpen: true, pollId: poll.id })}
+                    className="px-2 sm:px-3"
                   >
-                    <Trash2 size={16} />
+                    <Trash2 size={14} />
                   </Button>
                 </div>
               </div>

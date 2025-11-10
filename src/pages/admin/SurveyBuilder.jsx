@@ -271,38 +271,41 @@ const SurveyBuilder = () => {
   }
   
   return (
-    <div className="space-y-6">
-      <div className="flex items-center gap-4">
+    <div className="space-y-4 sm:space-y-6">
+      <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4">
         <Button
           variant="ghost"
           onClick={() => navigate('/admin/surveys')}
+          size="sm"
+          className="self-start"
         >
-          <ArrowLeft size={20} />
+          <ArrowLeft size={18} />
         </Button>
-        <div className="flex-1">
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
+        <div className="flex-1 min-w-0">
+          <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900 dark:text-white truncate text-start">
             {isEdit ? t('admin.editSurvey') : t('admin.createSurvey')}
           </h1>
         </div>
         {currentStep === 1 && (
-          <Button onClick={handleNextStep} loading={loading}>
-            {t('common.next')}
-            <ChevronRight size={20} className="ltr:ml-2 rtl:mr-2" />
+          <Button onClick={handleNextStep} loading={loading} size="sm" className="sm:size-md self-start sm:self-auto">
+            <span className="hidden sm:inline">{t('common.next')}</span>
+            <span className="sm:hidden">Next</span>
+            <ChevronRight size={18} className="ltr:ml-2 rtl:mr-2" />
           </Button>
         )}
         {currentStep === 2 && (
-          <Button onClick={handleSavePoll} loading={loading}>
-            <Save size={20} className="ltr:mr-2 rtl:ml-2" />
+          <Button onClick={handleSavePoll} loading={loading} size="sm" className="sm:size-md self-start sm:self-auto">
+            <Save size={18} className="ltr:mr-2 rtl:ml-2" />
             {t('common.save')}
           </Button>
         )}
       </div>
       
       {/* Steps Indicator */}
-      <div className="flex items-center justify-center gap-4">
-        <div className="flex items-center gap-2">
+      <div className="flex items-center justify-center gap-2 sm:gap-4 px-4">
+        <div className="flex items-center gap-1.5 sm:gap-2">
           <div className={clsx(
-            'w-10 h-10 rounded-full flex items-center justify-center font-semibold',
+            'w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center font-semibold text-sm sm:text-base flex-shrink-0',
             currentStep === 1 
               ? 'bg-blue-600 text-white' 
               : 'bg-green-600 text-white'
@@ -310,7 +313,7 @@ const SurveyBuilder = () => {
             1
           </div>
           <span className={clsx(
-            'font-medium',
+            'font-medium text-xs sm:text-base truncate text-start',
             currentStep === 1 
               ? 'text-gray-900 dark:text-white' 
               : 'text-green-600 dark:text-green-400'
@@ -319,16 +322,16 @@ const SurveyBuilder = () => {
           </span>
         </div>
         
-        <div className="w-20 h-1 bg-gray-300 dark:bg-gray-600">
+        <div className="w-12 sm:w-20 h-0.5 sm:h-1 bg-gray-300 dark:bg-gray-600 flex-shrink-0">
           <div className={clsx(
             'h-full bg-blue-600 transition-all duration-300',
             currentStep === 2 ? 'w-full' : 'w-0'
           )} />
         </div>
         
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1.5 sm:gap-2">
           <div className={clsx(
-            'w-10 h-10 rounded-full flex items-center justify-center font-semibold',
+            'w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center font-semibold text-sm sm:text-base flex-shrink-0',
             currentStep === 2 
               ? 'bg-blue-600 text-white' 
               : 'bg-gray-300 dark:bg-gray-600 text-gray-600 dark:text-gray-400'
@@ -336,7 +339,7 @@ const SurveyBuilder = () => {
             2
           </div>
           <span className={clsx(
-            'font-medium',
+            'font-medium text-xs sm:text-base truncate text-start',
             currentStep === 2 
               ? 'text-gray-900 dark:text-white' 
               : 'text-gray-400 dark:text-gray-500'
@@ -349,7 +352,7 @@ const SurveyBuilder = () => {
       {/* Step 1: Survey Details */}
       {currentStep === 1 && (
         <Card>
-          <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+          <h2 className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-white mb-4 text-start">
             {t('admin.surveyDetails')}
           </h2>
           <div className="space-y-4">
@@ -369,7 +372,7 @@ const SurveyBuilder = () => {
               fullWidth
             />
             
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               <Select
                 label={t('admin.status')}
                 value={pollData.status}
@@ -408,58 +411,61 @@ const SurveyBuilder = () => {
         <>
           {/* Survey Details Summary Card */}
           <Card>
-            <div className="flex items-start justify-between">
-              <div className="flex-1">
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
+            <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
+              <div className="flex-1 min-w-0">
+                <h3 className="text-base sm:text-lg font-semibold text-gray-900 dark:text-white mb-2 break-words text-start">
                   {getLocalizedText(pollData.title, i18n.language)}
                 </h3>
                 {hasAnyLanguage(pollData.description) && (
-                  <p className="text-gray-600 dark:text-gray-400 mb-3">
+                  <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400 mb-3 break-words text-start">
                     {getLocalizedText(pollData.description, i18n.language)}
                   </p>
                 )}
-                <div className="flex items-center gap-4 text-sm text-gray-600 dark:text-gray-400">
+                <div className="flex flex-wrap items-center gap-2 sm:gap-4 text-xs sm:text-sm text-gray-600 dark:text-gray-400">
                   <span className={clsx(
-                    'px-2 py-1 rounded',
+                    'px-2 py-1 rounded whitespace-nowrap',
                     pollData.status === 'active' ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300' :
                     pollData.status === 'draft' ? 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300' :
                     'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300'
                   )}>
                     {t(`admin.${pollData.status}`)}
                   </span>
-                  <span>{pollData.start_date} - {pollData.end_date}</span>
+                  <span className="truncate">{pollData.start_date} - {pollData.end_date}</span>
                 </div>
               </div>
               <Button
                 variant="ghost"
                 size="sm"
                 onClick={() => setCurrentStep(1)}
+                className="self-start sm:self-auto flex-shrink-0"
               >
-                <Edit size={16} className="ltr:mr-1 rtl:ml-1" />
-                {t('admin.editDetails')}
+                <Edit size={14} className="ltr:mr-1 rtl:ml-1" />
+                <span className="hidden sm:inline">{t('admin.editDetails')}</span>
+                <span className="sm:hidden">Edit</span>
               </Button>
             </div>
           </Card>
           
           {/* Questions Card */}
           <Card>
-            <div className="flex items-center justify-between mb-4">
-              <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-4">
+              <h2 className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-white text-start">
                 {t('admin.questions')} ({questions.length})
               </h2>
               {!questionForm.isOpen && (
-                <Button onClick={handleAddQuestion}>
-                  <Plus size={20} className="mr-2 rtl:mr-0 rtl:ml-2" />
-                  {t('admin.addQuestion')}
+                <Button onClick={handleAddQuestion} size="sm" className="self-start sm:self-auto">
+                  <Plus size={18} className="ltr:mr-2 rtl:ml-2" />
+                  <span className="hidden sm:inline">{t('admin.addQuestion')}</span>
+                  <span className="sm:hidden">Add</span>
                 </Button>
               )}
             </div>
             
             {/* Inline Question Form */}
             {questionForm.isOpen && (
-              <div id="question-form" className="mb-6 p-6 bg-blue-50 dark:bg-blue-900/10 border-2 border-blue-200 dark:border-blue-800 rounded-lg">
-                <div className="flex items-center justify-between mb-4">
-                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+              <div id="question-form" className="mb-4 sm:mb-6 p-4 sm:p-6 bg-blue-50 dark:bg-blue-900/10 border-2 border-blue-200 dark:border-blue-800 rounded-lg">
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-4">
+                  <h3 className="text-base sm:text-lg font-semibold text-gray-900 dark:text-white text-start">
                     {questionForm.isEdit ? t('admin.editQuestion') : t('admin.addQuestion')}
                   </h3>
                 </div>
@@ -511,13 +517,13 @@ const SurveyBuilder = () => {
                       )}
                       
                       <div>
-                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                        <label className="block text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                           {t('admin.options')}
                         </label>
                         <div className="space-y-3">
                           {questionForm.data.options.map((option, index) => (
-                            <div key={index} className="flex items-start gap-2">
-                              <div className="flex-1">
+                            <div key={index} className="flex flex-col sm:flex-row items-start gap-2">
+                              <div className="flex-1 w-full">
                                 <MultiLangInput
                                   value={option}
                                   onChange={(value) => handleQuestionOptionChange(index, value)}
@@ -529,8 +535,9 @@ const SurveyBuilder = () => {
                                   variant="danger"
                                   size="sm"
                                   onClick={() => handleRemoveQuestionOption(index)}
+                                  className="self-start sm:self-auto flex-shrink-0"
                                 >
-                                  <Trash2 size={16} />
+                                  <Trash2 size={14} />
                                 </Button>
                               )}
                             </div>
@@ -542,19 +549,19 @@ const SurveyBuilder = () => {
                           onClick={handleAddQuestionOption}
                           className="mt-2"
                         >
-                          <Plus size={16} className="mr-1 rtl:mr-0 rtl:ml-1" />
+                          <Plus size={14} className="ltr:mr-1 rtl:ml-1" />
                           {t('admin.addOption')}
                         </Button>
                       </div>
                     </>
                   )}
                   
-                  <div className="flex items-center gap-3 pt-4 border-t border-gray-200 dark:border-gray-700">
-                    <Button onClick={handleSubmitQuestion} loading={loading}>
-                      <Save size={18} className="mr-2 rtl:mr-0 rtl:ml-2" />
+                  <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 sm:gap-3 pt-4 border-t border-gray-200 dark:border-gray-700">
+                    <Button onClick={handleSubmitQuestion} loading={loading} size="sm" className="sm:size-md">
+                      <Save size={16} className="ltr:mr-2 rtl:ml-2" />
                       {questionForm.isEdit ? t('common.update') : t('common.save')}
                     </Button>
-                    <Button variant="secondary" onClick={handleCancelQuestionForm}>
+                    <Button variant="secondary" onClick={handleCancelQuestionForm} size="sm" className="sm:size-md">
                       {t('common.cancel')}
                     </Button>
                   </div>
@@ -563,7 +570,7 @@ const SurveyBuilder = () => {
             )}
             
             {questions.length === 0 && !questionForm.isOpen ? (
-              <div className="text-center py-8 text-gray-500 dark:text-gray-400">
+              <div className="py-6 sm:py-8 text-sm sm:text-base text-gray-500 dark:text-gray-400 text-start">
                 {t('admin.noQuestionsYet')}
               </div>
             ) : (
@@ -572,40 +579,40 @@ const SurveyBuilder = () => {
                   <div
                     key={question.id}
                     className={clsx(
-                      "flex items-start gap-3 p-4 rounded-lg transition-colors",
+                      "flex flex-col sm:flex-row items-start gap-3 p-3 sm:p-4 rounded-lg transition-colors",
                       questionForm.isEdit && questionForm.editingId === question.id
                         ? "bg-blue-50 dark:bg-blue-900/20 border-2 border-blue-300 dark:border-blue-700"
                         : "bg-gray-50 dark:bg-gray-700"
                     )}
                   >
-                    <div className="text-gray-400 cursor-move mt-1">
-                      <GripVertical size={20} />
+                    <div className="hidden sm:block text-gray-400 cursor-move mt-1 flex-shrink-0">
+                      <GripVertical size={18} />
                     </div>
                     
-                    <div className="flex-1">
-                      <div className="flex items-start justify-between mb-2">
-                        <div className="flex-1">
-                          <div className="flex items-center gap-2 mb-1">
-                            <span className="text-sm font-medium text-gray-500 dark:text-gray-400">
+                    <div className="flex-1 min-w-0 w-full">
+                      <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 mb-2">
+                        <div className="flex-1 min-w-0">
+                          <div className="flex flex-wrap items-center gap-2 mb-1">
+                            <span className="text-xs sm:text-sm font-medium text-gray-500 dark:text-gray-400 text-start">
                               {t('admin.questionNumber')}{index + 1}
                             </span>
                             {question.is_required && (
-                              <span className="text-xs px-2 py-0.5 bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300 rounded">
+                              <span className="text-xs px-1.5 sm:px-2 py-0.5 bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300 rounded whitespace-nowrap">
                                 {t('common.required')}
                               </span>
                             )}
-                            <span className="text-xs px-2 py-0.5 bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-300 rounded">
+                            <span className="text-xs px-1.5 sm:px-2 py-0.5 bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-300 rounded whitespace-nowrap">
                               {question.question_type === 'mcq' ? t('admin.mcq') : t('admin.text')}
                             </span>
                           </div>
-                          <p className="text-gray-900 dark:text-white font-medium">
+                          <p className="text-sm sm:text-base text-gray-900 dark:text-white font-medium break-words text-start">
                             {getLocalizedText(question.question_text, i18n.language)}
                           </p>
                           
                           {question.question_type === 'mcq' && question.options && (
-                            <div className="mt-2 ml-4 rtl:ml-0 rtl:mr-4 space-y-1">
+                            <div className="mt-2 ltr:ml-4 rtl:mr-4 space-y-1">
                               {question.options.map((option, idx) => (
-                                <div key={option.id} className="text-sm text-gray-600 dark:text-gray-400">
+                                <div key={option.id} className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 break-words text-start">
                                   • {getLocalizedText(option.option_text, i18n.language)}
                                 </div>
                               ))}
@@ -613,14 +620,14 @@ const SurveyBuilder = () => {
                           )}
                         </div>
                         
-                        <div className="flex items-center gap-2">
+                        <div className="flex items-center gap-2 self-start sm:self-auto flex-shrink-0">
                           <Button
                             variant="ghost"
                             size="sm"
                             onClick={() => handleEditQuestion(question)}
                             disabled={questionForm.isOpen}
                           >
-                            <Edit size={16} />
+                            <Edit size={14} />
                           </Button>
                           <Button
                             variant="ghost"
@@ -628,7 +635,7 @@ const SurveyBuilder = () => {
                             onClick={() => setDeleteModal({ isOpen: true, questionId: question.id })}
                             disabled={questionForm.isOpen}
                           >
-                            <Trash2 size={16} className="text-red-600" />
+                            <Trash2 size={14} className="text-red-600" />
                           </Button>
                         </div>
                       </div>

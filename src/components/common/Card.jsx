@@ -5,7 +5,7 @@ const Card = ({ children, className, padding = true, hover = false, ...props }) 
     <div
       className={clsx(
         'bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm',
-        padding && 'p-6',
+        padding && 'p-4 sm:p-6',
         hover && 'transition-shadow duration-200 hover:shadow-md',
         className
       )}

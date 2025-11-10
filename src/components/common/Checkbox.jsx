@@ -23,13 +23,13 @@ const Checkbox = forwardRef(({
           {...props}
         />
         {label && (
-          <span className="text-sm text-gray-700 dark:text-gray-300">
+          <span className="text-sm text-gray-700 dark:text-gray-300 text-start">
             {label}
           </span>
         )}
       </label>
       {error && (
-        <span className="text-sm text-red-500">{error}</span>
+        <span className="text-sm text-red-500 text-start">{error}</span>
       )}
     </div>
   );

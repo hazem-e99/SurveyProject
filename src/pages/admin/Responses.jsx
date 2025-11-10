@@ -85,27 +85,27 @@ const Responses = () => {
 
   // Cards View (Original)
   const CardsView = () => (
-    <div className="space-y-4">
+    <div className="space-y-3 sm:space-y-4">
       {responses.map((response, index) => (
         <Card key={response.id}>
-          <div className="flex items-center justify-between mb-4 pb-4 border-b border-gray-200 dark:border-gray-700">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-4 pb-4 border-b border-gray-200 dark:border-gray-700">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-primary-100 dark:bg-primary-900 rounded-full flex items-center justify-center">
-                <User size={20} className="text-primary-600 dark:text-primary-400" />
+              <div className="w-10 h-10 bg-primary-100 dark:bg-primary-900 rounded-full flex items-center justify-center flex-shrink-0">
+                <User size={18} className="text-primary-600 dark:text-primary-400" />
               </div>
-              <div>
-                <h3 className="font-semibold text-gray-900 dark:text-white">
+              <div className="min-w-0">
+                <h3 className="text-sm sm:text-base font-semibold text-gray-900 dark:text-white text-start">
                   {t('admin.responseNumber')}{index + 1}
                 </h3>
-                <div className="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400">
-                  <Calendar size={14} />
-                  {format(new Date(response.submitted_at), 'MMM d, yyyy HH:mm')}
+                <div className="flex items-center gap-1.5 sm:gap-2 text-xs sm:text-sm text-gray-500 dark:text-gray-400">
+                  <Calendar size={12} />
+                  <span className="truncate">{format(new Date(response.submitted_at), 'MMM d, yyyy HH:mm')}</span>
                 </div>
               </div>
             </div>
           </div>
           
-          <div className="space-y-4">
+          <div className="space-y-3 sm:space-y-4">
             {response.answers.map((answer, idx) => {
               // Format answer display
               let displayAnswer = answer.answer;
@@ -119,12 +119,12 @@ const Responses = () => {
               
               return (
                 <div key={idx}>
-                  <p className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  <p className="text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300 mb-2 break-words text-start">
                     {t('admin.questionNumber')}{idx + 1}: {getLocalizedText(answer.question_text, i18n.language)}
                   </p>
-                  <div className="ml-4 p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
-                    <p className="text-gray-900 dark:text-white">
-                      {displayAnswer || <span className="text-gray-400 italic">{t('admin.noAnswer')}</span>}
+                  <div className="ltr:ml-4 rtl:mr-4 p-2.5 sm:p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                    <p className="text-sm sm:text-base text-gray-900 dark:text-white break-words text-start">
+                      {displayAnswer || <span className="text-gray-400 italic text-start">{t('admin.noAnswer')}</span>}
                     </p>
                   </div>
                 </div>
@@ -138,52 +138,52 @@ const Responses = () => {
 
   // Summary/Analytics View
   const SummaryView = () => (
-    <div className="space-y-6">
+    <div className="space-y-4 sm:space-y-6">
       {Object.entries(summaryStats).map(([questionId, stat], idx) => (
         <Card key={questionId}>
-          <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+          <h3 className="text-base sm:text-lg font-semibold text-gray-900 dark:text-white mb-4 break-words text-start">
             {t('admin.questionNumber')}{idx + 1}: {getLocalizedText(stat.question, i18n.language)}
           </h3>
           
           {stat.type === 'text' ? (
             // Text answers list
             <div className="space-y-2">
-              <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">
+              <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 mb-3 text-start">
                 {stat.total} {t('admin.responsesCount')}
               </p>
-              <div className="space-y-2 max-h-96 overflow-y-auto">
+              <div className="space-y-2 max-h-80 sm:max-h-96 overflow-y-auto">
                 {stat.answers.map((answer, i) => (
-                  <div key={i} className="p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
-                    <p className="text-sm text-gray-900 dark:text-white">{answer}</p>
+                  <div key={i} className="p-2.5 sm:p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                    <p className="text-xs sm:text-sm text-gray-900 dark:text-white break-words text-start">{answer}</p>
                   </div>
                 ))}
               </div>
             </div>
           ) : (
             // MCQ answers with bar chart
-            <div className="space-y-3">
+            <div className="space-y-2.5 sm:space-y-3">
               {Object.entries(stat.answers).map(([option, count]) => {
                 const percentage = ((count / stat.total) * 100).toFixed(1);
                 return (
                   <div key={option}>
-                    <div className="flex items-center justify-between mb-1">
-                      <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1 mb-1">
+                      <span className="text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300 break-words text-start">
                         {option}
                       </span>
-                      <span className="text-sm text-gray-600 dark:text-gray-400">
+                      <span className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 whitespace-nowrap text-end">
                         {count} ({percentage}%)
                       </span>
                     </div>
-                    <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                    <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-1.5 sm:h-2">
                       <div 
-                        className="bg-primary-600 dark:bg-primary-500 h-2 rounded-full transition-all duration-500"
+                        className="bg-primary-600 dark:bg-primary-500 h-1.5 sm:h-2 rounded-full transition-all duration-500"
                         style={{ width: `${percentage}%` }}
                       />
                     </div>
                   </div>
                 );
               })}
-              <p className="text-xs text-gray-500 dark:text-gray-400 mt-2">
+              <p className="text-xs text-gray-500 dark:text-gray-400 mt-2 text-start">
                 {t('admin.totalResponsesText')}: {stat.total}
               </p>
             </div>
@@ -194,70 +194,72 @@ const Responses = () => {
   );
   
   return (
-    <div className="space-y-6">
-      <div className="flex items-center gap-4">
-        <Button variant="ghost" onClick={() => navigate('/admin/surveys')}>
-          <ArrowLeft size={20} />
+    <div className="space-y-4 sm:space-y-6">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4">
+        <Button variant="ghost" onClick={() => navigate('/admin/surveys')} size="sm" className="self-start">
+          <ArrowLeft size={18} />
         </Button>
-        <div className="flex-1">
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
+        <div className="flex-1 min-w-0">
+          <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900 dark:text-white truncate">
             {t('admin.viewResponses')}
           </h1>
           {currentPoll && (
-            <p className="text-gray-600 dark:text-gray-400 mt-1">
+            <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400 mt-1 truncate">
               {getLocalizedText(currentPoll.title, i18n.language)}
             </p>
           )}
         </div>
-        <div className="text-right">
-          <p className="text-sm text-gray-500 dark:text-gray-400">
+        <div className="ltr:text-left rtl:text-right sm:ltr:text-right sm:rtl:text-left self-start sm:self-auto">
+          <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 text-start">
             {t('admin.totalResponses')}
           </p>
-          <p className="text-2xl font-bold text-gray-900 dark:text-white">
+          <p className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white text-start">
             {responses.length}
           </p>
         </div>
       </div>
 
       {responses.length === 0 ? (
-        <Card className="text-center py-12">
-          <User size={64} className="mx-auto text-gray-400 mb-4" />
-          <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
-            {t('admin.noResponses')}
-          </h3>
-          <p className="text-gray-600 dark:text-gray-400">
-            {t('admin.noOneSubmitted')}
-          </p>
+        <Card className="py-8 sm:py-12">
+          <div className="text-start">
+            <User size={48} className="sm:w-16 sm:h-16 ltr:mr-auto rtl:ml-auto text-gray-400 mb-4" />
+            <h3 className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-white mb-2 text-start">
+              {t('admin.noResponses')}
+            </h3>
+            <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400 px-4 text-start">
+              {t('admin.noOneSubmitted')}
+            </p>
+          </div>
         </Card>
       ) : (
         <>
           {/* View Mode Switcher */}
           <Card>
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+              <div className="flex items-center gap-2 overflow-x-auto">
                 <button
                   onClick={() => setViewMode('cards')}
                   className={clsx(
-                    'flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors',
+                    'flex items-center gap-2 px-3 sm:px-4 py-2 rounded-lg text-xs sm:text-sm font-medium transition-colors whitespace-nowrap',
                     viewMode === 'cards'
                       ? 'bg-primary-100 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300'
                       : 'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800'
                   )}
                 >
-                  <LayoutList size={18} />
+                  <LayoutList size={16} />
                   <span>{t('admin.cardsView')}</span>
                 </button>
                 
                 <button
                   onClick={() => setViewMode('summary')}
                   className={clsx(
-                    'flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors',
+                    'flex items-center gap-2 px-3 sm:px-4 py-2 rounded-lg text-xs sm:text-sm font-medium transition-colors whitespace-nowrap',
                     viewMode === 'summary'
                       ? 'bg-primary-100 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300'
                       : 'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800'
                   )}
                 >
-                  <BarChart2 size={18} />
+                  <BarChart2 size={16} />
                   <span>{t('admin.summaryView')}</span>
                 </button>
               </div>

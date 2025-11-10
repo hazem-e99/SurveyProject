@@ -26,7 +26,7 @@ const Textarea = forwardRef(({
   return (
     <div className={clsx('flex flex-col gap-1', fullWidth && 'w-full')}>
       {label && (
-        <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
+        <label className="text-sm font-medium text-gray-700 dark:text-gray-300 text-start">
           {label}
           {required && <span className="text-red-500 ml-1">*</span>}
         </label>
@@ -38,10 +38,10 @@ const Textarea = forwardRef(({
         {...props}
       />
       {error && (
-        <span className="text-sm text-red-500">{error}</span>
+        <span className="text-sm text-red-500 text-start">{error}</span>
       )}
       {helperText && !error && (
-        <span className="text-sm text-gray-500 dark:text-gray-400">{helperText}</span>
+        <span className="text-sm text-gray-500 dark:text-gray-400 text-start">{helperText}</span>
       )}
     </div>
   );
