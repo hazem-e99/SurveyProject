@@ -1,0 +1,3 @@
+@echo off
+echo Starting Survey System...
+call npm run dev
