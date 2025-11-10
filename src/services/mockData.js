@@ -109,6 +109,134 @@ const initialData = {
       updated_at: '2024-01-01T00:00:00Z',
     },
     {
+      id: 4,
+      poll_id: 1,
+      question_text: {
+        ar: 'كم من الوقت كنت تستخدم خدماتنا؟',
+        en: 'How long have you been using our services?',
+        ku: 'چەندە کاتە خزمەتگوزارییەکانمان بەکاردەهێنیت؟'
+      },
+      question_type: 'mcq',
+      order_number: 3,
+      is_required: true,
+      allow_multiple_selections: false,
+      max_selections: 1,
+      created_at: '2024-01-01T00:00:00Z',
+      updated_at: '2024-01-01T00:00:00Z',
+    },
+    {
+      id: 5,
+      poll_id: 1,
+      question_text: {
+        ar: 'كيف تقيم سرعة الاستجابة لفريق الدعم؟',
+        en: 'How would you rate the support team response speed?',
+        ku: 'خێرایی وەڵامدانەوەی تیمی پشتگیری چۆن هەڵدەسەنگێنیت؟'
+      },
+      question_type: 'mcq',
+      order_number: 4,
+      is_required: true,
+      allow_multiple_selections: false,
+      max_selections: 1,
+      created_at: '2024-01-01T00:00:00Z',
+      updated_at: '2024-01-01T00:00:00Z',
+    },
+    {
+      id: 6,
+      poll_id: 1,
+      question_text: {
+        ar: 'ما مدى سهولة استخدام منصتنا؟',
+        en: 'How easy is it to use our platform?',
+        ku: 'چەند ئاسانە بەکارهێنانی پلاتفۆرمەکەمان؟'
+      },
+      question_type: 'mcq',
+      order_number: 5,
+      is_required: true,
+      allow_multiple_selections: false,
+      max_selections: 1,
+      created_at: '2024-01-01T00:00:00Z',
+      updated_at: '2024-01-01T00:00:00Z',
+    },
+    {
+      id: 7,
+      poll_id: 1,
+      question_text: {
+        ar: 'هل تنصح بخدماتنا للآخرين؟',
+        en: 'Would you recommend our services to others?',
+        ku: 'ئایا خزمەتگوزارییەکانمان پێشنیار بە کەسانی تر دەکەیت؟'
+      },
+      question_type: 'mcq',
+      order_number: 6,
+      is_required: true,
+      allow_multiple_selections: false,
+      max_selections: 1,
+      created_at: '2024-01-01T00:00:00Z',
+      updated_at: '2024-01-01T00:00:00Z',
+    },
+    {
+      id: 8,
+      poll_id: 1,
+      question_text: {
+        ar: 'ما هي أكثر ميزة تعجبك في خدماتنا؟',
+        en: 'What feature do you like most about our services?',
+        ku: 'کامە تایبەتمەندی زیاتر لە خزمەتگوزارییەکانمان حەز لێی دەکەیت؟'
+      },
+      question_type: 'mcq',
+      order_number: 7,
+      is_required: false,
+      allow_multiple_selections: true,
+      max_selections: 3,
+      created_at: '2024-01-01T00:00:00Z',
+      updated_at: '2024-01-01T00:00:00Z',
+    },
+    {
+      id: 9,
+      poll_id: 1,
+      question_text: {
+        ar: 'كيف تقيم جودة المحتوى المقدم؟',
+        en: 'How would you rate the quality of content provided?',
+        ku: 'کوالیتی ناوەڕۆکی پێشکەشکراو چۆن هەڵدەسەنگێنیت؟'
+      },
+      question_type: 'mcq',
+      order_number: 8,
+      is_required: true,
+      allow_multiple_selections: false,
+      max_selections: 1,
+      created_at: '2024-01-01T00:00:00Z',
+      updated_at: '2024-01-01T00:00:00Z',
+    },
+    {
+      id: 10,
+      poll_id: 1,
+      question_text: {
+        ar: 'ما مدى رضاك عن التسعير؟',
+        en: 'How satisfied are you with our pricing?',
+        ku: 'چەند ڕازیت لە نرخەکانمان؟'
+      },
+      question_type: 'mcq',
+      order_number: 9,
+      is_required: true,
+      allow_multiple_selections: false,
+      max_selections: 1,
+      created_at: '2024-01-01T00:00:00Z',
+      updated_at: '2024-01-01T00:00:00Z',
+    },
+    {
+      id: 11,
+      poll_id: 1,
+      question_text: {
+        ar: 'هل لديك أي ملاحظات أو اقتراحات إضافية؟',
+        en: 'Do you have any additional comments or suggestions?',
+        ku: 'ئایا هیچ بۆچوون یان پێشنیارێکی زیاترت هەیە؟'
+      },
+      question_type: 'text',
+      order_number: 10,
+      is_required: false,
+      allow_multiple_selections: false,
+      max_selections: null,
+      created_at: '2024-01-01T00:00:00Z',
+      updated_at: '2024-01-01T00:00:00Z',
+    },
+    {
       id: 3,
       poll_id: 2,
       question_text: {
@@ -132,6 +260,50 @@ const initialData = {
     { id: 3, question_id: 1, option_text: { ar: 'محايد', en: 'Neutral', ku: 'بێلایەن' }, order_number: 3, created_at: '2024-01-01T00:00:00Z' },
     { id: 4, question_id: 1, option_text: { ar: 'غير راضٍ', en: 'Dissatisfied', ku: 'ڕازی نیم' }, order_number: 4, created_at: '2024-01-01T00:00:00Z' },
     { id: 5, question_id: 1, option_text: { ar: 'غير راضٍ جداً', en: 'Very Dissatisfied', ku: 'زۆر ڕازی نیم' }, order_number: 5, created_at: '2024-01-01T00:00:00Z' },
+    // Question 4 options - Duration
+    { id: 10, question_id: 4, option_text: { ar: 'أقل من شهر', en: 'Less than a month', ku: 'کەمتر لە مانگێک' }, order_number: 1, created_at: '2024-01-01T00:00:00Z' },
+    { id: 11, question_id: 4, option_text: { ar: '1-3 أشهر', en: '1-3 months', ku: '1-3 مانگ' }, order_number: 2, created_at: '2024-01-01T00:00:00Z' },
+    { id: 12, question_id: 4, option_text: { ar: '3-6 أشهر', en: '3-6 months', ku: '3-6 مانگ' }, order_number: 3, created_at: '2024-01-01T00:00:00Z' },
+    { id: 13, question_id: 4, option_text: { ar: '6-12 شهر', en: '6-12 months', ku: '6-12 مانگ' }, order_number: 4, created_at: '2024-01-01T00:00:00Z' },
+    { id: 14, question_id: 4, option_text: { ar: 'أكثر من سنة', en: 'More than a year', ku: 'زیاتر لە ساڵێک' }, order_number: 5, created_at: '2024-01-01T00:00:00Z' },
+    // Question 5 options - Support Response
+    { id: 15, question_id: 5, option_text: { ar: 'ممتاز', en: 'Excellent', ku: 'نایاب' }, order_number: 1, created_at: '2024-01-01T00:00:00Z' },
+    { id: 16, question_id: 5, option_text: { ar: 'جيد جداً', en: 'Very Good', ku: 'زۆر باش' }, order_number: 2, created_at: '2024-01-01T00:00:00Z' },
+    { id: 17, question_id: 5, option_text: { ar: 'جيد', en: 'Good', ku: 'باش' }, order_number: 3, created_at: '2024-01-01T00:00:00Z' },
+    { id: 18, question_id: 5, option_text: { ar: 'مقبول', en: 'Fair', ku: 'قبووڵکراو' }, order_number: 4, created_at: '2024-01-01T00:00:00Z' },
+    { id: 19, question_id: 5, option_text: { ar: 'ضعيف', en: 'Poor', ku: 'خراپ' }, order_number: 5, created_at: '2024-01-01T00:00:00Z' },
+    // Question 6 options - Ease of Use
+    { id: 20, question_id: 6, option_text: { ar: 'سهل جداً', en: 'Very Easy', ku: 'زۆر ئاسان' }, order_number: 1, created_at: '2024-01-01T00:00:00Z' },
+    { id: 21, question_id: 6, option_text: { ar: 'سهل', en: 'Easy', ku: 'ئاسان' }, order_number: 2, created_at: '2024-01-01T00:00:00Z' },
+    { id: 22, question_id: 6, option_text: { ar: 'متوسط', en: 'Moderate', ku: 'مامناوەند' }, order_number: 3, created_at: '2024-01-01T00:00:00Z' },
+    { id: 23, question_id: 6, option_text: { ar: 'صعب', en: 'Difficult', ku: 'سەخت' }, order_number: 4, created_at: '2024-01-01T00:00:00Z' },
+    { id: 24, question_id: 6, option_text: { ar: 'صعب جداً', en: 'Very Difficult', ku: 'زۆر سەخت' }, order_number: 5, created_at: '2024-01-01T00:00:00Z' },
+    // Question 7 options - Recommendation
+    { id: 25, question_id: 7, option_text: { ar: 'بالتأكيد نعم', en: 'Definitely Yes', ku: 'بێگومان بەڵێ' }, order_number: 1, created_at: '2024-01-01T00:00:00Z' },
+    { id: 26, question_id: 7, option_text: { ar: 'نعم', en: 'Yes', ku: 'بەڵێ' }, order_number: 2, created_at: '2024-01-01T00:00:00Z' },
+    { id: 27, question_id: 7, option_text: { ar: 'ربما', en: 'Maybe', ku: 'لەوانەیە' }, order_number: 3, created_at: '2024-01-01T00:00:00Z' },
+    { id: 28, question_id: 7, option_text: { ar: 'لا', en: 'No', ku: 'نەخێر' }, order_number: 4, created_at: '2024-01-01T00:00:00Z' },
+    { id: 29, question_id: 7, option_text: { ar: 'بالتأكيد لا', en: 'Definitely No', ku: 'بێگومان نەخێر' }, order_number: 5, created_at: '2024-01-01T00:00:00Z' },
+    // Question 8 options - Favorite Features
+    { id: 30, question_id: 8, option_text: { ar: 'سهولة الاستخدام', en: 'Ease of Use', ku: 'ئاسانی بەکارهێنان' }, order_number: 1, created_at: '2024-01-01T00:00:00Z' },
+    { id: 31, question_id: 8, option_text: { ar: 'الدعم الفني', en: 'Technical Support', ku: 'پشتگیری تەکنیکی' }, order_number: 2, created_at: '2024-01-01T00:00:00Z' },
+    { id: 32, question_id: 8, option_text: { ar: 'السرعة', en: 'Speed', ku: 'خێرایی' }, order_number: 3, created_at: '2024-01-01T00:00:00Z' },
+    { id: 33, question_id: 8, option_text: { ar: 'التصميم', en: 'Design', ku: 'دیزاین' }, order_number: 4, created_at: '2024-01-01T00:00:00Z' },
+    { id: 34, question_id: 8, option_text: { ar: 'الموثوقية', en: 'Reliability', ku: 'متمانەپێکراوی' }, order_number: 5, created_at: '2024-01-01T00:00:00Z' },
+    { id: 35, question_id: 8, option_text: { ar: 'التحديثات المستمرة', en: 'Regular Updates', ku: 'نوێکردنەوەی بەردەوام' }, order_number: 6, created_at: '2024-01-01T00:00:00Z' },
+    // Question 9 options - Content Quality
+    { id: 36, question_id: 9, option_text: { ar: 'ممتاز', en: 'Excellent', ku: 'نایاب' }, order_number: 1, created_at: '2024-01-01T00:00:00Z' },
+    { id: 37, question_id: 9, option_text: { ar: 'جيد جداً', en: 'Very Good', ku: 'زۆر باش' }, order_number: 2, created_at: '2024-01-01T00:00:00Z' },
+    { id: 38, question_id: 9, option_text: { ar: 'جيد', en: 'Good', ku: 'باش' }, order_number: 3, created_at: '2024-01-01T00:00:00Z' },
+    { id: 39, question_id: 9, option_text: { ar: 'مقبول', en: 'Fair', ku: 'قبووڵکراو' }, order_number: 4, created_at: '2024-01-01T00:00:00Z' },
+    { id: 40, question_id: 9, option_text: { ar: 'ضعيف', en: 'Poor', ku: 'خراپ' }, order_number: 5, created_at: '2024-01-01T00:00:00Z' },
+    // Question 10 options - Pricing Satisfaction
+    { id: 41, question_id: 10, option_text: { ar: 'راضٍ جداً', en: 'Very Satisfied', ku: 'زۆر ڕازیم' }, order_number: 1, created_at: '2024-01-01T00:00:00Z' },
+    { id: 42, question_id: 10, option_text: { ar: 'راضٍ', en: 'Satisfied', ku: 'ڕازیم' }, order_number: 2, created_at: '2024-01-01T00:00:00Z' },
+    { id: 43, question_id: 10, option_text: { ar: 'محايد', en: 'Neutral', ku: 'بێلایەن' }, order_number: 3, created_at: '2024-01-01T00:00:00Z' },
+    { id: 44, question_id: 10, option_text: { ar: 'غير راضٍ', en: 'Dissatisfied', ku: 'ڕازی نیم' }, order_number: 4, created_at: '2024-01-01T00:00:00Z' },
+    { id: 45, question_id: 10, option_text: { ar: 'غير راضٍ جداً', en: 'Very Dissatisfied', ku: 'زۆر ڕازی نیم' }, order_number: 5, created_at: '2024-01-01T00:00:00Z' },
+    // Poll 2 options
     { id: 6, question_id: 3, option_text: { ar: 'لوحة التحكم', en: 'Dashboard', ku: 'داشبۆرد' }, order_number: 1, created_at: '2024-01-15T00:00:00Z' },
     { id: 7, question_id: 3, option_text: { ar: 'التقارير', en: 'Reports', ku: 'ڕاپۆرتەکان' }, order_number: 2, created_at: '2024-01-15T00:00:00Z' },
     { id: 8, question_id: 3, option_text: { ar: 'التحليلات', en: 'Analytics', ku: 'شیکاری' }, order_number: 3, created_at: '2024-01-15T00:00:00Z' },
@@ -185,8 +357,8 @@ export const saveMockDB = () => {
 // Helper to generate IDs
 const initialNextId = {
   polls: 3,
-  questions: 4,
-  mcq_options: 10,
+  questions: 12,
+  mcq_options: 46,
   responses: 3,
   mcq_answers: 3,
   text_answers: 3,

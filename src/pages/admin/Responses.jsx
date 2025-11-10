@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { ArrowLeft, Calendar, User, LayoutList, Table2, BarChart2, Download } from 'lucide-react';
+import { ArrowLeft, Calendar, User, LayoutList, BarChart2, Download } from 'lucide-react';
 import { useResponseStore } from '../../store/responseStore';
 import { useSurveyStore } from '../../store/surveyStore';
 import { getLocalizedText } from '../../utils/multiLang';
@@ -17,7 +17,7 @@ const Responses = () => {
   const { id } = useParams();
   const { responses, loading, fetchResponses } = useResponseStore();
   const { currentPoll, fetchPollById } = useSurveyStore();
-  const [viewMode, setViewMode] = useState('cards'); // 'cards', 'table', 'summary'
+  const [viewMode, setViewMode] = useState('cards'); // 'cards', 'summary'
   
   useEffect(() => {
     fetchPollById(id);
@@ -136,67 +136,6 @@ const Responses = () => {
     </div>
   );
 
-  // Table View
-  const TableView = () => (
-    <Card>
-      <div className="overflow-x-auto">
-        <table className="w-full">
-          <thead>
-            <tr className="border-b border-gray-200 dark:border-gray-700">
-              <th className="px-4 py-3 text-left text-sm font-semibold text-gray-900 dark:text-white whitespace-nowrap sticky left-0 bg-white dark:bg-gray-800 z-10">
-                #
-              </th>
-              <th className="px-4 py-3 text-left text-sm font-semibold text-gray-900 dark:text-white whitespace-nowrap sticky left-12 bg-white dark:bg-gray-800 z-10">
-                {t('admin.submittedAt')}
-              </th>
-              {allQuestions.map((question) => (
-                <th key={question.id} className="px-4 py-3 text-left text-sm font-semibold text-gray-900 dark:text-white min-w-[250px]">
-                  <div className="line-clamp-2">
-                    {getLocalizedText(question.text, i18n.language)}
-                  </div>
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {responses.map((response, index) => (
-              <tr 
-                key={response.id}
-                className="border-b border-gray-100 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors"
-              >
-                <td className="px-4 py-3 text-sm font-medium text-gray-900 dark:text-white whitespace-nowrap sticky left-0 bg-white dark:bg-gray-800">
-                  {index + 1}
-                </td>
-                <td className="px-4 py-3 text-sm text-gray-600 dark:text-gray-400 whitespace-nowrap sticky left-12 bg-white dark:bg-gray-800">
-                  {format(new Date(response.submitted_at), 'MMM d, yyyy HH:mm')}
-                </td>
-                {response.answers.map((answer) => {
-                  // Format answer display
-                  let displayAnswer = answer.answer;
-                  if (answer.question_type === 'mcq' && Array.isArray(answer.answer)) {
-                    // Convert array of multilang objects to localized comma-separated string
-                    displayAnswer = answer.answer
-                      .map(opt => getLocalizedText(opt, i18n.language))
-                      .filter(Boolean)
-                      .join(', ');
-                  }
-                  
-                  return (
-                    <td key={answer.question_id} className="px-4 py-3 text-sm text-gray-900 dark:text-white min-w-[250px]">
-                      <div className="line-clamp-3">
-                        {displayAnswer || <span className="text-gray-400 italic">-</span>}
-                      </div>
-                    </td>
-                  );
-                })}
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    </Card>
-  );
-
   // Summary/Analytics View
   const SummaryView = () => (
     <div className="space-y-6">
@@ -310,19 +249,6 @@ const Responses = () => {
                 </button>
                 
                 <button
-                  onClick={() => setViewMode('table')}
-                  className={clsx(
-                    'flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors',
-                    viewMode === 'table'
-                      ? 'bg-primary-100 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300'
-                      : 'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800'
-                  )}
-                >
-                  <Table2 size={18} />
-                  <span>{t('admin.tableView')}</span>
-                </button>
-                
-                <button
                   onClick={() => setViewMode('summary')}
                   className={clsx(
                     'flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors',
@@ -340,7 +266,6 @@ const Responses = () => {
 
           {/* Render View Based on Mode */}
           {viewMode === 'cards' && <CardsView />}
-          {viewMode === 'table' && <TableView />}
           {viewMode === 'summary' && <SummaryView />}
         </>
       )}
