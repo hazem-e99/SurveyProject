@@ -36,12 +36,7 @@ const ThankYou = () => {
           </p>
         </div>
         
-        <Button
-          onClick={() => navigate('/')}
-          variant="outline"
-        >
-          {t('survey.returnHome')}
-        </Button>
+
       </Card>
     </div>
   );

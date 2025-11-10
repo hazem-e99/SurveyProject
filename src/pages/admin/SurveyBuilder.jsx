@@ -44,10 +44,19 @@ const SurveyBuilder = () => {
     end_date: '',
   });
   
-  const [questionModal, setQuestionModal] = useState({
+  // Inline question form state
+  const [questionForm, setQuestionForm] = useState({
     isOpen: false,
-    question: null,
     isEdit: false,
+    editingId: null,
+    data: {
+      question_text: initMultiLangText(),
+      question_type: 'mcq',
+      is_required: true,
+      allow_multiple_selections: false,
+      max_selections: 1,
+      options: [initMultiLangText(), initMultiLangText()],
+    }
   });
   
   const [deleteModal, setDeleteModal] = useState({
@@ -137,29 +146,113 @@ const SurveyBuilder = () => {
   };
   
   const handleAddQuestion = () => {
-    setQuestionModal({
+    setQuestionForm({
       isOpen: true,
-      question: {
+      isEdit: false,
+      editingId: null,
+      data: {
         question_text: initMultiLangText(),
         question_type: 'mcq',
         is_required: true,
         allow_multiple_selections: false,
         max_selections: 1,
         options: [initMultiLangText(), initMultiLangText()],
-      },
-      isEdit: false,
+      }
     });
   };
   
   const handleEditQuestion = (question) => {
-    setQuestionModal({
+    setQuestionForm({
       isOpen: true,
-      question: {
-        ...question,
-        options: question.options?.map(o => o.option_text) || ['', ''],
-      },
       isEdit: true,
+      editingId: question.id,
+      data: {
+        ...question,
+        options: question.options?.map(o => o.option_text) || [initMultiLangText(), initMultiLangText()],
+      }
     });
+    // Scroll to form
+    setTimeout(() => {
+      document.getElementById('question-form')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 100);
+  };
+  
+  const handleCancelQuestionForm = () => {
+    setQuestionForm({
+      isOpen: false,
+      isEdit: false,
+      editingId: null,
+      data: {
+        question_text: initMultiLangText(),
+        question_type: 'mcq',
+        is_required: true,
+        allow_multiple_selections: false,
+        max_selections: 1,
+        options: [initMultiLangText(), initMultiLangText()],
+      }
+    });
+  };
+  
+  const handleQuestionFormChange = (field, value) => {
+    setQuestionForm(prev => ({
+      ...prev,
+      data: { ...prev.data, [field]: value }
+    }));
+  };
+  
+  const handleQuestionOptionChange = (index, value) => {
+    const newOptions = [...questionForm.data.options];
+    newOptions[index] = value;
+    handleQuestionFormChange('options', newOptions);
+  };
+  
+  const handleAddQuestionOption = () => {
+    handleQuestionFormChange('options', [...questionForm.data.options, initMultiLangText()]);
+  };
+  
+  const handleRemoveQuestionOption = (index) => {
+    if (questionForm.data.options.length > 2) {
+      const newOptions = questionForm.data.options.filter((_, i) => i !== index);
+      handleQuestionFormChange('options', newOptions);
+    }
+  };
+  
+  const handleSubmitQuestion = async () => {
+    if (!hasAnyLanguage(questionForm.data.question_text)) {
+      toast.error(t('validation.required'));
+      return;
+    }
+    
+    if (questionForm.data.question_type === 'mcq') {
+      const validOptions = questionForm.data.options.filter(o => hasAnyLanguage(o));
+      if (validOptions.length < 2) {
+        toast.error('At least 2 options required for MCQ');
+        return;
+      }
+    }
+    
+    try {
+      const questionPayload = {
+        ...questionForm.data,
+        poll_id: parseInt(id),
+        order_number: questionForm.isEdit ? questionForm.data.order_number : 999,
+        options: questionForm.data.question_type === 'mcq' 
+          ? questionForm.data.options.filter(o => hasAnyLanguage(o))
+          : [],
+      };
+      
+      if (questionForm.isEdit) {
+        await updateQuestion(questionForm.editingId, questionPayload);
+        toast.success(t('admin.questionUpdated'));
+      } else {
+        await createQuestion(questionPayload);
+        toast.success(t('admin.questionAdded'));
+      }
+      
+      handleCancelQuestionForm();
+    } catch (error) {
+      toast.error(error.message);
+    }
   };
   
   const handleDeleteQuestion = async () => {
@@ -193,12 +286,12 @@ const SurveyBuilder = () => {
         {currentStep === 1 && (
           <Button onClick={handleNextStep} loading={loading}>
             {t('common.next')}
-            <ChevronRight size={20} className="ml-2" />
+            <ChevronRight size={20} className="ltr:ml-2 rtl:mr-2" />
           </Button>
         )}
         {currentStep === 2 && (
           <Button onClick={handleSavePoll} loading={loading}>
-            <Save size={20} className="mr-2" />
+            <Save size={20} className="ltr:mr-2 rtl:ml-2" />
             {t('common.save')}
           </Button>
         )}
@@ -341,7 +434,7 @@ const SurveyBuilder = () => {
                 size="sm"
                 onClick={() => setCurrentStep(1)}
               >
-                <Edit size={16} className="mr-1" />
+                <Edit size={16} className="ltr:mr-1 rtl:ml-1" />
                 Edit Details
               </Button>
             </div>
@@ -353,13 +446,122 @@ const SurveyBuilder = () => {
               <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
                 {t('admin.questions')} ({questions.length})
               </h2>
-              <Button onClick={handleAddQuestion}>
-                <Plus size={20} className="mr-2" />
-                {t('admin.addQuestion')}
-              </Button>
+              {!questionForm.isOpen && (
+                <Button onClick={handleAddQuestion}>
+                  <Plus size={20} className="mr-2 rtl:mr-0 rtl:ml-2" />
+                  {t('admin.addQuestion')}
+                </Button>
+              )}
             </div>
             
-            {questions.length === 0 ? (
+            {/* Inline Question Form */}
+            {questionForm.isOpen && (
+              <div id="question-form" className="mb-6 p-6 bg-blue-50 dark:bg-blue-900/10 border-2 border-blue-200 dark:border-blue-800 rounded-lg">
+                <div className="flex items-center justify-between mb-4">
+                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+                    {questionForm.isEdit ? t('admin.editQuestion') : t('admin.addQuestion')}
+                  </h3>
+                </div>
+                
+                <div className="space-y-4">
+                  <MultiLangInput
+                    label={t('admin.questionText')}
+                    value={questionForm.data.question_text}
+                    onChange={(value) => handleQuestionFormChange('question_text', value)}
+                    type="textarea"
+                    fullWidth
+                    required
+                  />
+                  
+                  <Select
+                    label={t('admin.questionType')}
+                    value={questionForm.data.question_type}
+                    onChange={(e) => handleQuestionFormChange('question_type', e.target.value)}
+                    fullWidth
+                    options={[
+                      { value: 'mcq', label: t('admin.mcq') },
+                      { value: 'text', label: t('admin.text') },
+                    ]}
+                  />
+                  
+                  <Checkbox
+                    label={t('admin.isRequired')}
+                    checked={questionForm.data.is_required}
+                    onChange={(e) => handleQuestionFormChange('is_required', e.target.checked)}
+                  />
+                  
+                  {questionForm.data.question_type === 'mcq' && (
+                    <>
+                      <Checkbox
+                        label={t('admin.allowMultiple')}
+                        checked={questionForm.data.allow_multiple_selections}
+                        onChange={(e) => handleQuestionFormChange('allow_multiple_selections', e.target.checked)}
+                      />
+                      
+                      {questionForm.data.allow_multiple_selections && (
+                        <Input
+                          label={t('admin.maxSelections')}
+                          type="number"
+                          value={questionForm.data.max_selections}
+                          onChange={(e) => handleQuestionFormChange('max_selections', e.target.value)}
+                          fullWidth
+                          min={1}
+                        />
+                      )}
+                      
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                          {t('admin.options')}
+                        </label>
+                        <div className="space-y-3">
+                          {questionForm.data.options.map((option, index) => (
+                            <div key={index} className="flex items-start gap-2">
+                              <div className="flex-1">
+                                <MultiLangInput
+                                  value={option}
+                                  onChange={(value) => handleQuestionOptionChange(index, value)}
+                                  fullWidth
+                                />
+                              </div>
+                              {questionForm.data.options.length > 2 && (
+                                <Button
+                                  variant="danger"
+                                  size="sm"
+                                  onClick={() => handleRemoveQuestionOption(index)}
+                                >
+                                  <Trash2 size={16} />
+                                </Button>
+                              )}
+                            </div>
+                          ))}
+                        </div>
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={handleAddQuestionOption}
+                          className="mt-2"
+                        >
+                          <Plus size={16} className="mr-1 rtl:mr-0 rtl:ml-1" />
+                          {t('admin.addOption')}
+                        </Button>
+                      </div>
+                    </>
+                  )}
+                  
+                  <div className="flex items-center gap-3 pt-4 border-t border-gray-200 dark:border-gray-700">
+                    <Button onClick={handleSubmitQuestion} loading={loading}>
+                      <Save size={18} className="mr-2 rtl:mr-0 rtl:ml-2" />
+                      {questionForm.isEdit ? t('common.update') : t('common.save')}
+                    </Button>
+                    <Button variant="secondary" onClick={handleCancelQuestionForm}>
+                      {t('common.cancel')}
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            )}
+            
+            {questions.length === 0 && !questionForm.isOpen ? (
               <div className="text-center py-8 text-gray-500 dark:text-gray-400">
                 No questions yet. Add your first question!
               </div>
@@ -368,7 +570,12 @@ const SurveyBuilder = () => {
                 {questions.map((question, index) => (
                   <div
                     key={question.id}
-                    className="flex items-start gap-3 p-4 bg-gray-50 dark:bg-gray-700 rounded-lg"
+                    className={clsx(
+                      "flex items-start gap-3 p-4 rounded-lg transition-colors",
+                      questionForm.isEdit && questionForm.editingId === question.id
+                        ? "bg-blue-50 dark:bg-blue-900/20 border-2 border-blue-300 dark:border-blue-700"
+                        : "bg-gray-50 dark:bg-gray-700"
+                    )}
                   >
                     <div className="text-gray-400 cursor-move mt-1">
                       <GripVertical size={20} />
@@ -395,7 +602,7 @@ const SurveyBuilder = () => {
                           </p>
                           
                           {question.question_type === 'mcq' && question.options && (
-                            <div className="mt-2 ml-4 space-y-1">
+                            <div className="mt-2 ml-4 rtl:ml-0 rtl:mr-4 space-y-1">
                               {question.options.map((option, idx) => (
                                 <div key={option.id} className="text-sm text-gray-600 dark:text-gray-400">
                                   • {getLocalizedText(option.option_text, i18n.language)}
@@ -410,6 +617,7 @@ const SurveyBuilder = () => {
                             variant="ghost"
                             size="sm"
                             onClick={() => handleEditQuestion(question)}
+                            disabled={questionForm.isOpen}
                           >
                             <Edit size={16} />
                           </Button>
@@ -417,6 +625,7 @@ const SurveyBuilder = () => {
                             variant="ghost"
                             size="sm"
                             onClick={() => setDeleteModal({ isOpen: true, questionId: question.id })}
+                            disabled={questionForm.isOpen}
                           >
                             <Trash2 size={16} className="text-red-600" />
                           </Button>
@@ -430,14 +639,6 @@ const SurveyBuilder = () => {
           </Card>
         </>
       )}
-      
-      <QuestionModal
-        isOpen={questionModal.isOpen}
-        onClose={() => setQuestionModal({ isOpen: false, question: null, isEdit: false })}
-        question={questionModal.question}
-        isEdit={questionModal.isEdit}
-        pollId={id}
-      />
       
       <Modal
         isOpen={deleteModal.isOpen}
@@ -462,211 +663,6 @@ const SurveyBuilder = () => {
         </p>
       </Modal>
     </div>
-  );
-};
-
-// Question Modal Component
-const QuestionModal = ({ isOpen, onClose, question, isEdit, pollId }) => {
-  const { t } = useTranslation();
-  const { createQuestion, updateQuestion, loading } = useSurveyStore();
-  
-  const [formData, setFormData] = useState({
-    question_text: initMultiLangText(),
-    question_type: 'mcq',
-    is_required: true,
-    allow_multiple_selections: false,
-    max_selections: 1,
-    options: [initMultiLangText(), initMultiLangText()],
-  });
-  
-  useEffect(() => {
-    if (question) {
-      setFormData(question);
-    } else {
-      setFormData({
-        question_text: initMultiLangText(),
-        question_type: 'mcq',
-        is_required: true,
-        allow_multiple_selections: false,
-        max_selections: 1,
-        options: [initMultiLangText(), initMultiLangText()],
-      });
-    }
-  }, [question, isOpen]);
-  
-  const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: type === 'checkbox' ? checked : value,
-    }));
-  };
-  
-  const handleOptionChange = (index, value) => {
-    const newOptions = [...formData.options];
-    newOptions[index] = value;
-    setFormData(prev => ({ ...prev, options: newOptions }));
-  };
-  
-  const handleAddOption = () => {
-    setFormData(prev => ({
-      ...prev,
-      options: [...prev.options, initMultiLangText()],
-    }));
-  };
-  
-  const handleRemoveOption = (index) => {
-    if (formData.options.length > 2) {
-      const newOptions = formData.options.filter((_, i) => i !== index);
-      setFormData(prev => ({ ...prev, options: newOptions }));
-    }
-  };
-  
-  const handleSubmit = async () => {
-    if (!hasAnyLanguage(formData.question_text)) {
-      toast.error(t('validation.required'));
-      return;
-    }
-    
-    if (formData.question_type === 'mcq') {
-      const validOptions = formData.options.filter(o => hasAnyLanguage(o));
-      if (validOptions.length < 2) {
-        toast.error('At least 2 options required for MCQ');
-        return;
-      }
-    }
-    
-    try {
-      const questionPayload = {
-        ...formData,
-        poll_id: parseInt(pollId),
-        order_number: isEdit ? formData.order_number : 999,
-        options: formData.question_type === 'mcq' 
-          ? formData.options.filter(o => hasAnyLanguage(o))
-          : [],
-      };
-      
-      if (isEdit) {
-        await updateQuestion(question.id, questionPayload);
-        toast.success(t('admin.questionUpdated'));
-      } else {
-        await createQuestion(questionPayload);
-        toast.success(t('admin.questionAdded'));
-      }
-      
-      onClose();
-    } catch (error) {
-      toast.error(error.message);
-    }
-  };
-  
-  return (
-    <Modal
-      isOpen={isOpen}
-      onClose={onClose}
-      title={isEdit ? t('admin.editQuestion') : t('admin.addQuestion')}
-      size="lg"
-      footer={
-        <>
-          <Button variant="secondary" onClick={onClose}>
-            {t('common.cancel')}
-          </Button>
-          <Button onClick={handleSubmit} loading={loading}>
-            {t('common.save')}
-          </Button>
-        </>
-      }
-    >
-      <div className="space-y-4">
-        <MultiLangInput
-          label={t('admin.questionText')}
-          value={formData.question_text}
-          onChange={(value) => setFormData(prev => ({ ...prev, question_text: value }))}
-          type="textarea"
-          fullWidth
-          required
-        />
-        
-        <Select
-          label={t('admin.questionType')}
-          name="question_type"
-          value={formData.question_type}
-          onChange={handleChange}
-          fullWidth
-          options={[
-            { value: 'mcq', label: t('admin.mcq') },
-            { value: 'text', label: t('admin.text') },
-          ]}
-        />
-        
-        <Checkbox
-          label={t('admin.isRequired')}
-          name="is_required"
-          checked={formData.is_required}
-          onChange={handleChange}
-        />
-        
-        {formData.question_type === 'mcq' && (
-          <>
-            <Checkbox
-              label={t('admin.allowMultiple')}
-              name="allow_multiple_selections"
-              checked={formData.allow_multiple_selections}
-              onChange={handleChange}
-            />
-            
-            {formData.allow_multiple_selections && (
-              <Input
-                label={t('admin.maxSelections')}
-                name="max_selections"
-                type="number"
-                value={formData.max_selections}
-                onChange={handleChange}
-                fullWidth
-                min={1}
-              />
-            )}
-            
-            <div>
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                {t('admin.options')}
-              </label>
-              <div className="space-y-3">
-                {formData.options.map((option, index) => (
-                  <div key={index} className="flex items-start gap-2">
-                    <div className="flex-1">
-                      <MultiLangInput
-                        value={option}
-                        onChange={(value) => handleOptionChange(index, value)}
-                        fullWidth
-                      />
-                    </div>
-                    {formData.options.length > 2 && (
-                      <Button
-                        variant="danger"
-                        size="sm"
-                        onClick={() => handleRemoveOption(index)}
-                      >
-                        <Trash2 size={16} />
-                      </Button>
-                    )}
-                  </div>
-                ))}
-              </div>
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={handleAddOption}
-                className="mt-2"
-              >
-                <Plus size={16} className="mr-1" />
-                {t('admin.addOption')}
-              </Button>
-            </div>
-          </>
-        )}
-      </div>
-    </Modal>
   );
 };
 
