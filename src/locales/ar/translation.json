@@ -144,7 +144,8 @@
     "surveyExpired": "انتهت صلاحية هذا الاستطلاع",
     "validationError": "الرجاء الإجابة على جميع الأسئلة المطلوبة",
     "submissionError": "فشل إرسال الاستطلاع. الرجاء المحاولة مرة أخرى.",
-    "surveyNotStarted": "لم يبدأ هذا الاستطلاع بعد"
+    "surveyNotStarted": "لم يبدأ هذا الاستطلاع بعد",
+    "maxSelectionsReached": "يمكنك اختيار {{max}} خيارات كحد أقصى"
   },
   "validation": {
     "required": "هذا الحقل مطلوب",

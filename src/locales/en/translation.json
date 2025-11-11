@@ -144,7 +144,8 @@
     "surveyExpired": "This survey has expired",
     "validationError": "Please answer all required questions",
     "submissionError": "Failed to submit survey. Please try again.",
-    "surveyNotStarted": "This survey hasn't started yet"
+    "surveyNotStarted": "This survey hasn't started yet",
+    "maxSelectionsReached": "You can only select up to {{max}} options"
   },
   "validation": {
     "required": "This field is required",

@@ -54,18 +54,35 @@ const SurveyPage = () => {
     }
   }, [currentPoll, t]);
   
-  const handleAnswerChange = (questionId, value, questionType, allowMultiple) => {
+  const handleAnswerChange = (questionId, value, questionType, allowMultiple, maxSelections) => {
     if (questionType === 'mcq' && allowMultiple) {
       // Multiple selections
       const currentSelections = answers[questionId] || [];
-      const newSelections = currentSelections.includes(value)
-        ? currentSelections.filter(v => v !== value)
-        : [...currentSelections, value];
       
-      setAnswers(prev => ({
-        ...prev,
-        [questionId]: newSelections,
-      }));
+      if (currentSelections.includes(value)) {
+        // Remove selection
+        const newSelections = currentSelections.filter(v => v !== value);
+        setAnswers(prev => ({
+          ...prev,
+          [questionId]: newSelections,
+        }));
+      } else {
+        // Add selection - check max limit
+        if (maxSelections && currentSelections.length >= maxSelections) {
+          // Store translation key and params so message re-renders when language changes
+          setErrors(prev => ({
+            ...prev,
+            [questionId]: { key: 'survey.maxSelectionsReached', params: { max: maxSelections } }
+          }));
+          return;
+        }
+        
+        const newSelections = [...currentSelections, value];
+        setAnswers(prev => ({
+          ...prev,
+          [questionId]: newSelections,
+        }));
+      }
     } else {
       // Single selection or text
       setAnswers(prev => ({
@@ -91,7 +108,7 @@ const SurveyPage = () => {
       if (question.is_required) {
         const answer = answers[question.id];
         if (!answer || (Array.isArray(answer) && answer.length === 0) || answer.trim?.() === '') {
-          newErrors[question.id] = t('survey.requiredField');
+          newErrors[question.id] = { key: 'survey.requiredField' };
         }
       }
     });
@@ -211,7 +228,7 @@ const SurveyPage = () => {
                         <Checkbox
                           label={getLocalizedText(option.option_text, i18n.language)}
                           checked={(answers[question.id] || []).includes(option.id)}
-                          onChange={(e) => handleAnswerChange(question.id, option.id, 'mcq', true)}
+                          onChange={(e) => handleAnswerChange(question.id, option.id, 'mcq', true, question.max_selections)}
                         />
                       ) : (
                         <Radio
@@ -219,7 +236,7 @@ const SurveyPage = () => {
                           name={`question_${question.id}`}
                           value={option.id}
                           checked={answers[question.id] === option.id}
-                          onChange={(e) => handleAnswerChange(question.id, option.id, 'mcq', false)}
+                          onChange={(e) => handleAnswerChange(question.id, option.id, 'mcq', false, null)}
                         />
                       )}
                     </div>
@@ -237,7 +254,10 @@ const SurveyPage = () => {
               
               {errors[question.id] && (
                 <p className="text-xs sm:text-sm text-red-500 mt-2 text-start">
-                  {errors[question.id]}
+                  {typeof errors[question.id] === 'string' 
+                    ? errors[question.id]
+                    : t(errors[question.id].key, errors[question.id].params || {})
+                  }
                 </p>
               )}
             </Card>
