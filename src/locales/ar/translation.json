@@ -26,7 +26,14 @@
     "error": "خطأ",
     "warning": "تحذير",
     "info": "معلومات",
-    "viewAll": "عرض الكل"
+    "viewAll": "عرض الكل",
+    "all": "الكل",
+    "noContent": "لا يوجد محتوى",
+    "learnMore": "اعرف المزيد"
+  },
+  "topBar": {
+    "instituteName": "معهد الشعب والسياسة",
+    "slogan": "مستقبلك يبدأ اليوم"
   },
   "languages": {
     "en": "English",
@@ -54,6 +61,30 @@
     "responses": "الإجابات",
     "settings": "الإعدادات",
     "profile": "الملف الشخصي",
+    "manageSections": "إدارة الأقسام",
+    "manageSectionsDesc": "إنشاء وإدارة أقسام الصفحات لجميع الصفحات العامة",
+    "addSection": "إضافة قسم",
+    "editSection": "تعديل القسم",
+    "page": "الصفحة",
+    "selectPage": "اختر صفحة",
+    "title": "العنوان",
+    "titleEn": "العنوان (إنجليزي)",
+    "titleAr": "العنوان (عربي)",
+    "titleKu": "العنوان (كردي)",
+    "content": "المحتوى",
+    "contentEn": "المحتوى (إنجليزي)",
+    "contentAr": "المحتوى (عربي)",
+    "contentKu": "المحتوى (كردي)",
+    "mediaUrl": "رابط الوسائط (صورة أو فيديو)",
+    "order": "ترتيب العرض",
+    "actions": "الإجراءات",
+    "noSectionsFound": "لم يتم العثور على أقسام",
+    "sectionCreated": "تم إنشاء القسم بنجاح",
+    "sectionUpdated": "تم تحديث القسم بنجاح",
+    "sectionDeleted": "تم حذف القسم بنجاح",
+    "errorFetchingSections": "خطأ في جلب الأقسام",
+    "errorSavingSection": "خطأ في حفظ القسم",
+    "errorDeletingSection": "خطأ في حذف القسم",
     "createSurvey": "إنشاء استطلاع",
     "createSurveyDesc": "ابدأ استطلاعاً جديداً",
     "createFirstSurvey": "أنشئ أول استطلاع لك للبدء",
@@ -155,5 +186,158 @@
     "minValue": "الحد الأدنى للقيمة هو {{min}}",
     "maxValue": "الحد الأقصى للقيمة هو {{max}}",
     "invalidFormat": "تنسيق غير صحيح"
+  },
+  "nav": {
+    "talentDevelopment": "تطوير المواهب",
+    "communityEngagement": "المشاركة المجتمعية",
+    "surveys": "الاستطلاعات",
+    "scientificResearch": "البحث العلمي",
+    "artsCreativity": "الفنون والإبداع",
+    "jobOpportunities": "فرص العمل",
+    "activitySchedule": "جدول الأنشطة",
+    "about": "من نحن",
+    "contact": "اتصل بنا",
+    "partners": "الشركاء"
+  },
+  "footer": {
+    "description": "بناء مستقبل أفضر من خلال الابتكار والتعاون والمشاركة المجتمعية.",
+    "quickLinks": "روابط سريعة",
+    "more": "المزيد",
+    "contact": "اتصل بنا",
+    "email": "البريد الإلكتروني",
+    "phone": "الهاتف",
+    "address": "العنوان",
+    "addressText": "دهوك، كوردستان",
+    "rights": "جميع الحقوق محفوظة.",
+    "privacy": "سياسة الخصوصية",
+    "terms": "شروط الخدمة"
+  },
+  "pages": {
+    "home": {
+      "hero": {
+        "title": "مرحباً بك في منصتنا",
+        "subtitle": "تمكين المجتمعات من خلال الابتكار والتعاون",
+        "learnMore": "اعرف المزيد",
+        "getInTouch": "تواصل معنا"
+      },
+      "features": {
+        "title": "ما نقدمه",
+        "subtitle": "اكتشف مجموعة برامجنا وخدماتنا",
+        "community": {
+          "title": "المشاركة المجتمعية",
+          "description": "بناء روابط أقوى داخل مجتمعنا"
+        },
+        "research": {
+          "title": "البحث العلمي",
+          "description": "تقدم المعرفة من خلال البحث المبتكر"
+        },
+        "activities": {
+          "title": "جدول الأنشطة",
+          "description": "ابق على اطلاع بأحدث الفعاليات والبرامج"
+        },
+        "jobs": {
+          "title": "فرص العمل",
+          "description": "انضم إلى فريقنا وطور مسيرتك المهنية"
+        }
+      },
+      "cta": {
+        "title": "هل أنت مستعد للبدء؟",
+        "subtitle": "انضم إلينا في إحداث فرق في مجتمعنا",
+        "button": "اتصل بنا اليوم"
+      }
+    },
+    "talentDevelopment": {
+      "title": "تطوير المواهب",
+      "subtitle": "تمكين الأفراد من تحقيق إمكاناتهم الكاملة"
+    },
+    "communityEngagement": {
+      "title": "المشاركة المجتمعية",
+      "subtitle": "بناء مجتمعات أقوى وأكثر ترابطاً"
+    },
+    "scientificResearch": {
+      "title": "البحث العلمي",
+      "subtitle": "تقدم المعرفة من خلال البحث المبتكر"
+    },
+    "artsCreativity": {
+      "title": "الفنون والإبداع",
+      "subtitle": "الاحتفال ورعاية التعبير الإبداعي"
+    },
+    "jobOpportunities": {
+      "title": "فرص العمل",
+      "subtitle": "ابحث عن فرصتك المهنية القادمة معنا"
+    },
+    "activitySchedule": {
+      "title": "جدول الأنشطة",
+      "subtitle": "ابق على اطلاع بأنشطتنا وفعالياتنا القادمة",
+      "activity": "النشاط",
+      "date": "التاريخ",
+      "time": "الوقت",
+      "location": "الموقع",
+      "headers": {
+        "academy": "اكاديمية PGS",
+        "community": "المجتمع",
+        "polls": "استطلاعات الراي",
+        "general": "عام",
+        "music": "الموسيقى",
+        "inPGS": "في PGS"
+      },
+      "items": {
+        "leadership": "القيادة",
+        "womenLeadership": "قيادة نسائية",
+        "youthLeadership": "قيادة شبابية",
+        "individualDevelopment": "تنمية فردية",
+        "professionalDevelopment": "تنمية مهنية",
+        "universitiesInstitutes": "الجامعات والمعاهد",
+        "women": "النساء",
+        "studentsYouth": "الطلبة والشباب",
+        "belonging": "الانتماء",
+        "basicPrograms": "البرامج الاساسية",
+        "electronicPolls": "استطلاعات الكترونية",
+        "society": "المجتمع",
+        "economy": "الاقتصاد",
+        "health": "الصحة",
+        "environment": "البيئة",
+        "education": "التعليم",
+        "management": "الادارة",
+        "masterTheses": "رسائل الماجستير",
+        "doctoralTheses": "رسائل الدكتوراه",
+        "theater": "المسرح",
+        "drawing": "الرسم",
+        "sculpture": "النحت",
+        "handicrafts": "اعمال يدوية",
+        "innovations": "الابداعات",
+        "volunteerWorkPGS": "العمل التطوعي في PGS",
+        "workOtherPlaces": "العمل في اماكن اخرى",
+        "volunteerWorkOtherPlaces": "العمل الطوعي في اماكن اخرى"
+      }
+    },
+    "about": {
+      "title": "من نحن",
+      "subtitle": "تعرف على رسالتنا وقيمنا"
+    },
+    "contact": {
+      "title": "اتصل بنا",
+      "subtitle": "تواصل مع فريقنا",
+      "getInTouch": "تواصل معنا",
+      "description": "نود أن نسمع منك. أرسل لنا رسالة وسنرد في أقرب وقت ممكن.",
+      "email": "عنوان البريد الإلكتروني",
+      "phone": "رقم الهاتف",
+      "address": "العنوان",
+      "sendMessage": "أرسل لنا رسالة",
+      "name": "اسمك",
+      "emailLabel": "بريدك الإلكتروني",
+      "subject": "الموضوع",
+      "messageLabel": "رسالتك",
+      "send": "إرسال الرسالة",
+      "successMessage": "شكراً لك على رسالتك! سنعود إليك قريباً."
+    },
+    "partners": {
+      "title": "شركاؤنا",
+      "subtitle": "التعاون من أجل تأثير أكبر"
+    },
+    "surveys": {
+      "subtitle": "شارك في استطلاعاتنا وساعدنا على التحسين",
+      "noActiveSurveys": "لا توجد استطلاعات نشطة في الوقت الحالي. يرجى المراجعة لاحقاً."
+    }
   }
 }

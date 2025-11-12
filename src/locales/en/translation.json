@@ -26,7 +26,14 @@
     "error": "Error",
     "warning": "Warning",
     "info": "Info",
-    "viewAll": "View All"
+    "viewAll": "View All",
+    "all": "All",
+    "noContent": "No content available",
+    "learnMore": "Learn More"
+  },
+  "topBar": {
+    "instituteName": "People and Politics Institute",
+    "slogan": "Your Future Starts Today"
   },
   "languages": {
     "en": "English",
@@ -54,6 +61,30 @@
     "responses": "Responses",
     "settings": "Settings",
     "profile": "Profile",
+    "manageSections": "Manage Sections",
+    "manageSectionsDesc": "Create and manage page sections for all public pages",
+    "addSection": "Add Section",
+    "editSection": "Edit Section",
+    "page": "Page",
+    "selectPage": "Select Page",
+    "title": "Title",
+    "titleEn": "Title (English)",
+    "titleAr": "Title (Arabic)",
+    "titleKu": "Title (Kurdish)",
+    "content": "Content",
+    "contentEn": "Content (English)",
+    "contentAr": "Content (Arabic)",
+    "contentKu": "Content (Kurdish)",
+    "mediaUrl": "Media URL (Image or Video)",
+    "order": "Display Order",
+    "actions": "Actions",
+    "noSectionsFound": "No sections found",
+    "sectionCreated": "Section created successfully",
+    "sectionUpdated": "Section updated successfully",
+    "sectionDeleted": "Section deleted successfully",
+    "errorFetchingSections": "Error fetching sections",
+    "errorSavingSection": "Error saving section",
+    "errorDeletingSection": "Error deleting section",
     "createSurvey": "Create Survey",
     "createSurveyDesc": "Start a new survey",
     "createFirstSurvey": "Create your first survey to get started",
@@ -155,5 +186,158 @@
     "minValue": "Minimum value is {{min}}",
     "maxValue": "Maximum value is {{max}}",
     "invalidFormat": "Invalid format"
+  },
+  "nav": {
+    "talentDevelopment": "Talent Development",
+    "communityEngagement": "Community Engagement",
+    "surveys": "Surveys",
+    "scientificResearch": "Scientific Research",
+    "artsCreativity": "Arts & Creativity",
+    "jobOpportunities": "Job Opportunities",
+    "activitySchedule": "Activity Schedule",
+    "about": "About Us",
+    "contact": "Contact",
+    "partners": "Partners"
+  },
+  "footer": {
+    "description": "Building a better future through innovation, collaboration, and community engagement.",
+    "quickLinks": "Quick Links",
+    "more": "More",
+    "contact": "Contact Us",
+    "email": "Email",
+    "phone": "Phone",
+    "address": "Address",
+    "addressText": "Duhok, Kurdistan",
+    "rights": "All rights reserved.",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Service"
+  },
+  "pages": {
+    "home": {
+      "hero": {
+        "title": "Welcome to Our Platform",
+        "subtitle": "Empowering communities through innovation and collaboration",
+        "learnMore": "Learn More",
+        "getInTouch": "Get In Touch"
+      },
+      "features": {
+        "title": "What We Offer",
+        "subtitle": "Discover our range of programs and services",
+        "community": {
+          "title": "Community Engagement",
+          "description": "Building stronger connections within our community"
+        },
+        "research": {
+          "title": "Scientific Research",
+          "description": "Advancing knowledge through innovative research"
+        },
+        "activities": {
+          "title": "Activity Schedule",
+          "description": "Stay updated with our latest events and programs"
+        },
+        "jobs": {
+          "title": "Career Opportunities",
+          "description": "Join our team and grow your career"
+        }
+      },
+      "cta": {
+        "title": "Ready to Get Started?",
+        "subtitle": "Join us in making a difference in our community",
+        "button": "Contact Us Today"
+      }
+    },
+    "talentDevelopment": {
+      "title": "Talent Development",
+      "subtitle": "Empowering individuals to reach their full potential"
+    },
+    "communityEngagement": {
+      "title": "Community Engagement",
+      "subtitle": "Building stronger, more connected communities"
+    },
+    "scientificResearch": {
+      "title": "Scientific Research",
+      "subtitle": "Advancing knowledge through innovative research"
+    },
+    "artsCreativity": {
+      "title": "Arts & Creativity",
+      "subtitle": "Celebrating and nurturing creative expression"
+    },
+    "jobOpportunities": {
+      "title": "Job Opportunities",
+      "subtitle": "Find your next career opportunity with us"
+    },
+    "activitySchedule": {
+      "title": "Activity Schedule",
+      "subtitle": "Stay informed about our upcoming activities and events",
+      "activity": "Activity",
+      "date": "Date",
+      "time": "Time",
+      "location": "Location",
+      "headers": {
+        "academy": "PGS Academy",
+        "community": "Community",
+        "polls": "Opinion Polls",
+        "general": "General",
+        "music": "Music",
+        "inPGS": "In PGS"
+      },
+      "items": {
+        "leadership": "Leadership",
+        "womenLeadership": "Women's Leadership",
+        "youthLeadership": "Youth Leadership",
+        "individualDevelopment": "Individual Development",
+        "professionalDevelopment": "Professional Development",
+        "universitiesInstitutes": "Universities and Institutes",
+        "women": "Women",
+        "studentsYouth": "Students and Youth",
+        "belonging": "Belonging",
+        "basicPrograms": "Basic Programs",
+        "electronicPolls": "Electronic Polls",
+        "society": "Society",
+        "economy": "Economy",
+        "health": "Health",
+        "environment": "Environment",
+        "education": "Education",
+        "management": "Management",
+        "masterTheses": "Master's Theses",
+        "doctoralTheses": "Doctoral Theses",
+        "theater": "Theater",
+        "drawing": "Drawing",
+        "sculpture": "Sculpture",
+        "handicrafts": "Handicrafts",
+        "innovations": "Innovations",
+        "volunteerWorkPGS": "Volunteer Work at PGS",
+        "workOtherPlaces": "Work at Other Places",
+        "volunteerWorkOtherPlaces": "Volunteer Work at Other Places"
+      }
+    },
+    "about": {
+      "title": "About Us",
+      "subtitle": "Learn more about our mission and values"
+    },
+    "contact": {
+      "title": "Contact Us",
+      "subtitle": "Get in touch with our team",
+      "getInTouch": "Get In Touch",
+      "description": "We'd love to hear from you. Send us a message and we'll respond as soon as possible.",
+      "email": "Email Address",
+      "phone": "Phone Number",
+      "address": "Address",
+      "sendMessage": "Send us a Message",
+      "name": "Your Name",
+      "emailLabel": "Your Email",
+      "subject": "Subject",
+      "messageLabel": "Your Message",
+      "send": "Send Message",
+      "successMessage": "Thank you for your message! We'll get back to you soon."
+    },
+    "partners": {
+      "title": "Our Partners",
+      "subtitle": "Collaborating for greater impact"
+    },
+    "surveys": {
+      "subtitle": "Participate in our surveys and help us improve",
+      "noActiveSurveys": "No active surveys at the moment. Please check back later."
+    }
   }
 }

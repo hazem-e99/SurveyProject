@@ -1,5 +1,4 @@
 import { useTranslation } from 'react-i18next';
-import { Globe, ChevronDown, Check } from 'lucide-react';
 import { useEffect, useState, useRef } from 'react';
 import clsx from 'clsx';
 
@@ -53,27 +52,27 @@ const LanguageSwitcher = ({ className }) => {
       <button
         onClick={() => setIsOpen(!isOpen)}
         className={clsx(
-          'flex items-center gap-2 px-3 py-2 bg-white dark:bg-gray-800',
+          'flex items-center gap-2 px-4 py-2 bg-white dark:bg-gray-800',
           'border border-gray-300 dark:border-gray-600 rounded-lg',
           'hover:bg-gray-50 dark:hover:bg-gray-700',
           'transition-all duration-200',
-          'focus:outline-none focus:ring-2 focus:ring-primary-500 dark:focus:ring-primary-400',
-          isOpen && 'ring-2 ring-primary-500 dark:ring-primary-400'
+          'focus:outline-none focus:ring-2 focus:ring-gray-400 dark:focus:ring-gray-500',
+          isOpen && 'ring-2 ring-gray-400 dark:ring-gray-500'
         )}
         aria-label="Change language"
         aria-expanded={isOpen}
       >
-        <Globe size={18} className="text-gray-600 dark:text-gray-400" />
-        <span className="text-sm font-medium text-gray-700 dark:text-gray-300 min-w-[60px] text-left">
+        <span className="text-sm font-medium text-gray-700 dark:text-gray-300 min-w-[60px]">
           {currentLanguage.nativeName}
         </span>
-        <ChevronDown 
-          size={16} 
+        <span 
           className={clsx(
-            'text-gray-500 dark:text-gray-400 transition-transform duration-200',
+            'text-gray-500 dark:text-gray-400 transition-transform duration-200 text-xs',
             isOpen && 'transform rotate-180'
           )} 
-        />
+        >
+          ▼
+        </span>
       </button>
       
       {isOpen && (
@@ -83,7 +82,7 @@ const LanguageSwitcher = ({ className }) => {
             'bg-white dark:bg-gray-800',
             'border border-gray-200 dark:border-gray-700',
             'rounded-lg shadow-lg',
-            'py-1 z-50',
+            'py-1 z-[100]',
             'animate-in fade-in slide-in-from-top-2 duration-200',
             i18n.language === 'ar' || i18n.language === 'ku' 
               ? 'left-0' 
@@ -99,13 +98,13 @@ const LanguageSwitcher = ({ className }) => {
                 'text-sm font-medium transition-colors',
                 'hover:bg-gray-100 dark:hover:bg-gray-700',
                 lang.code === i18n.language
-                  ? 'bg-primary-50 dark:bg-primary-900/20 text-primary-700 dark:text-primary-300'
+                  ? 'bg-gray-100 dark:bg-gray-700 text-black dark:text-white font-semibold'
                   : 'text-gray-700 dark:text-gray-300'
               )}
             >
               <span>{lang.nativeName}</span>
               {lang.code === i18n.language && (
-                <Check size={16} className="text-primary-600 dark:text-primary-400" />
+                <span className="text-black dark:text-white">✓</span>
               )}
             </button>
           ))}
