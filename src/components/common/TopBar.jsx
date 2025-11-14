@@ -1,6 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import LanguageSwitcher from './LanguageSwitcher';
 import ThemeToggle from './ThemeToggle';
+import logo from '../../assets/logo.png';
 
 const TopBar = () => {
   const { t } = useTranslation();
@@ -12,7 +13,7 @@ const TopBar = () => {
           {/* Left Side - Logo */}
           <div className="flex items-center">
             <img 
-              src="/logo.png" 
+              src={logo} 
               alt="PGS Logo" 
               className="h-12 w-auto"
             />
