@@ -12,7 +12,7 @@ const TopBar = () => {
           {/* Left Side - Logo */}
           <div className="flex items-center">
             <img 
-              src="/Public/logo.png" 
+              src="/logo.png" 
               alt="PGS Logo" 
               className="h-12 w-auto"
             />

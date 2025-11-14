@@ -62,7 +62,8 @@ function App() {
         <Routes>
           {/* Public Routes with Layout */}
           <Route element={<PublicLayout />}>
-            <Route path="/" element={<Home />} />
+            <Route path="/" element={<ActivitySchedule />} />
+            <Route path="/home" element={<Home />} />
             <Route path="/talent-development" element={<TalentDevelopment />} />
             <Route path="/community-engagement" element={<CommunityEngagement />} />
             <Route path="/surveys" element={<SurveysList />} />
