@@ -34,15 +34,15 @@ const ManageSections = () => {
 
   const pageOptions = [
     { value: 'all', label: t('common.all') },
-    { value: 'talent-development', label: t('pages.talentDevelopment.title') },
-    { value: 'community-engagement', label: t('pages.communityEngagement.title') },
-    { value: 'scientific-research', label: t('pages.scientificResearch.title') },
-    { value: 'arts-creativity', label: t('pages.artsCreativity.title') },
-    { value: 'job-opportunities', label: t('pages.jobOpportunities.title') },
-    { value: 'activity-schedule', label: t('pages.activitySchedule.title') },
-    { value: 'about', label: t('pages.about.title') },
-    { value: 'contact', label: t('pages.contact.title') },
-    { value: 'partners', label: t('pages.partners.title') },
+    { value: 'talent-development', label: t('pages.talentDevelopment.title') || 'Talent Development' },
+    { value: 'community-engagement', label: t('pages.communityEngagement.title') || 'Community Engagement' },
+    { value: 'scientific-research', label: t('pages.scientificResearch.title') || 'Scientific Research' },
+    { value: 'arts-creativity', label: t('pages.artsCreativity.title') || 'Arts & Creativity' },
+    { value: 'job-opportunities', label: t('pages.jobOpportunities.title') || 'Job Opportunities' },
+    { value: 'activity-schedule', label: t('pages.activitySchedule.title') || 'Activity Schedule' },
+    { value: 'about', label: t('pages.about.title') || 'About Us' },
+    { value: 'contact', label: t('pages.contact.title') || 'Contact Us' },
+    { value: 'partners', label: t('pages.partners.title') || 'Partners' },
   ];
 
   useEffect(() => {

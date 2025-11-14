@@ -8,6 +8,7 @@ import './i18n';
 import ProtectedRoute from './components/ProtectedRoute';
 import AdminLayout from './components/admin/AdminLayout';
 import PublicLayout from './layouts/PublicLayout';
+import FloatingSidebars from './components/common/FloatingSidebars';
 
 // Admin Pages
 import Login from './pages/admin/Login';
@@ -56,6 +57,7 @@ function App() {
   
   return (
     <>
+      <FloatingSidebars />
       <BrowserRouter>
         <Routes>
           {/* Public Routes with Layout */}

@@ -340,4 +340,16 @@
       "noActiveSurveys": "No active surveys at the moment. Please check back later."
     }
   }
+  ,
+  "floatingSidebars": {
+    "radio": {
+      "title": "Radio",
+      "subtitle": "Would you like to listen to our broadcasts?",
+      "languages": ["Kurdish", "Arabic", "Persian", "Turkish", "English", "All languages"],
+      "cta": "Contact Us"
+    },
+    "ad": {
+      "text": "Voor Reklame"
+    }
+  }
 }
